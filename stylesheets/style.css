@@ -1,0 +1,230 @@
+.logoContainer{
+    margin: 0 auto;
+    margin-top: 5em;
+    padding: 1em;
+    width: 25em;
+    height: 5em;
+}
+
+.searchForm{
+	margin: 0 auto;
+	padding: 1em;
+    width: 25em;
+    height: 5em;
+}
+
+.searchBar{
+	height: 2em;
+	width: 27em;
+	padding-left: 5px;
+}
+
+.searchButton{
+	
+}
+	
+
+body{
+    font-family: 'Roboto', sans-serif;
+    color: #2A3A48; 
+    background-color: #FAFAFF;
+}
+
+.mainContainer {
+    /* margin: 0 auto; */
+    width: 100%;
+    height: 100%;
+    /* color: #C45024;*/
+}
+
+a {
+    text-decoration: none;
+    color: #2A3A48;
+}
+
+.headerContent {
+    font-family: 'Indie Flower', cursive;
+    font-size: 2em;
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+    color: #BE1623;
+}
+
+a {
+    text-decoration: none;
+    color: #2A3A48;
+}
+
+
+.navbar {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-right: 1em;
+    margin: 0 auto;
+    float: none;
+    width: 75em;
+    height: auto;
+    text-align: left;
+    /*background-color: #FAFAFF;*/
+    background-color: #B2D4EA;
+}
+
+.menuButton {
+    display: inline;
+    width: 5em;
+    height: 5em;
+    text-align: center;
+    padding: 1em;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.menuButton:hover, .menuButton:hover > a {
+    background-color: #A2C2D7;
+    color: white;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    text-align: center;
+}
+
+.formContentContainer {
+    margin: 0 auto;
+    margin-top: 2em;
+    padding-top: 2px;
+    padding-bottom: 3em;
+    padding-left: 4em;
+    padding-right: 4em;
+    width: auto;
+    max-width: 40em;
+    height: auto;
+    background-color: #fff;
+    box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.24);
+    border-radius: 10px; 
+}
+
+input, textarea {
+    font-size: 1em;
+    border: solid 1px;
+    border-color: #D8D8D8;
+    width: 100%;
+    height: auto;
+    margin: 3px;
+    text-align: left;
+}
+
+input:focus, textarea:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border: solid 1px;
+    border-color: #B2D4EA;
+}
+
+input:hover, textarea:hover {
+    border: solid 1px;
+    border-color: #B2D4EA;
+    animation: none;
+}
+
+.radioLabel input {
+   width: auto;
+}
+
+.button input {
+    width: 10em;
+    height: 2em;
+    text-align: center;
+    margin: 0 auto;
+    outline: none !important;
+    color: white;
+    border: none;
+    background-color: #B2D4EA !important;
+}
+
+
+.button input:hover {
+    outline: none !important;
+    color: white;
+    border: none;
+    background-color: #A2C2D7 !important;
+    box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.24);
+    position: relative;
+    top: -2px;
+}
+
+
+.recipeMainImg > img {
+    margin: 0 auto;
+    display: block;
+}
+
+.userReviewPost, .recipeDescrip, .recipeTime, ingredientList {
+    padding-top: 5px;
+}
+
+.recipeAuthor {
+    text-align: center;
+    color: white;
+    padding: 2em;
+    margin-left:  15em;
+    margin-bottom: 12em;
+    width: 10em;
+    background-color: #B2D4EA;
+}
+
+.recipeAuthor:hover {
+   outline: none !important;
+    color: white;
+    border: none;
+    background-color: #A2C2D7 !important;
+    box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.24);
+    position: relative;
+    top: -2px;   
+}
+
+/* STEVE'S RECIPE SUBMISSION SPECIFIC STUFF
+the recipe submission version of formContent*/
+.submissionCard {
+	margin: 0 auto;
+    margin-top: 5em;
+    padding: 5em;
+    min-height: 13em;
+    min-width: 5em;
+	max-width: 70%;
+    background-color: #fff;
+    box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.24);
+    border-radius: 10px;        /* Added */
+}
+
+#ingredientColumn{
+	float: left;
+	width: 55%;
+	padding: 5px;
+}
+
+#quantityColumn{
+	float: left;
+	width: 15%;
+	padding: 5px;
+}
+
+#unitColumn{
+	width: 20%;
+	float: left;
+	padding: 5px;
+}
+
+#addIngredient {
+	width: 15em;
+    text-align: center;
+    margin: 0 auto;
+    outline: none !important;
+    color: ffffff;
+    border: none;
+    background-color: #B2D4EA !important;
+    border-radius: 5px; /* Added this*/
+	clear: both;
+	float: right;
+}
+/*END SUBMISSION SPECIFIC STUFF*/
+
