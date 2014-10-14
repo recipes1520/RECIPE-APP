@@ -9,7 +9,11 @@
 <body>
 	<div class="mainContainer">   
 		<div class="navbar">
-			<div class="menuButton"><a href="http://recipes1520.appspot.com/login">Login</a></div> 
+      {% if login_btn != '' %}
+			<div class="menuButton"><a href="{{ login_btn }}">Login</a></div>
+      {% else %}
+      <div class="menuButton"><a href="{{ logout_btn }}">Logout</a></div>
+      {% endif %}
 			<div class="menuButton"><a href="#">Recipes</a></div>
 			<div class="menuButton"><a href="#">About</a></div>
 			<div class="menuButton"><a href="#">Features</a></div>
