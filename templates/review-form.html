@@ -12,6 +12,11 @@
         <div class="mainContainer"> 
             <!-- NAVBAR -->
             <div class="navbar">
+			       {% if login_btn != '' %}
+			       <div class="menuButton"><a href="{{ login_btn }}">Login</a></div>
+			       {% else %}
+			       <div class="menuButton"><a href="{{ logout_btn }}">Logout</a></div>
+			       {% endif %}
         			<div class="menuButton"><a href="http://recipes1520.appspot.com/login">Login</a></div> 
         			<div class="menuButton"><a href="#">Recipes</a></div>
         			<div class="menuButton"><a href="#">About</a></div>
@@ -144,7 +149,7 @@
                     <h3> Submit Your Review </h3>
                     <form action="/submit_comment" method="post">
                         <input type="text" placeholder="Receipe Name" name="recipe" id="recipe" maxlength=255 required=TRUE/> <br>
-                        <input type="text" placeholder="Receipe Author" name="author" id="author" maxlength=255 required=TRUE/> <br>
+                        <!--<input type="text" placeholder="Receipe Author" name="author" id="author" maxlength=255 required=TRUE/> <br> -->
                         <label class=radioLabel"> Rating: </label>
                         <label class="radioLabel">
                             5 <input type="radio" name="rating" value="5" required=TRUE>

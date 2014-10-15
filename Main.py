@@ -48,7 +48,9 @@ class ReviewPage(webapp2.RequestHandler) :
                 ReviewSubmission.date)
         user_reviews = query.fetch()
         template_values = {
-            'review_submit' : user_reviews
+            'review_submit' : user_reviews,
+             'login_btn': getLoginLink(),
+            'logout_btn': getLogoutLink()
         }
         path = os.path.join(os.path.dirname(__file__), 'templates/review-form.html')
         self.response.out.write(template.render(path, template_values))
@@ -57,7 +59,8 @@ class CommentSection(webapp2.RequestHandler) :
     def post(self) :
         try :
             input_recipe = str(cgi.escape(self.request.get('recipe')))
-            input_author = str(cgi.escape(self.request.get('author')))
+ #           input_author = str(cgi.escape(self.request.get('author')))
+            input_author = str(users.get_current_user())
             input_rating = int(cgi.escape(self.request.get('rating')))
             input_comments = str(cgi.escape(self.request.get('comments')))
             self.store_comment(input_recipe, input_author, input_rating,
@@ -97,17 +100,6 @@ class LoginPage(webapp2.RequestHandler) :
     path = 'templates/sign-in.html'
     self.response.out.write(template.render(path, template_values))
 
-'''class ReviewPage(webapp2.RequestHandler) :
-  # implementing the get method here allows this class to handle GET requests.
-  def get(self) :
-   
- 
-    template_values = {
-      'login_btn': getLoginLink(),
-      'logout_btn': getLogoutLink()
-    }
-    path = 'templates/review-form.html'
-    self.response.out.write(template.render(path, template_values)) '''
 
 class SubmitPage(webapp2.RequestHandler) :
   # implementing the get method here allows this class to handle GET requests.
