@@ -9,6 +9,18 @@ from google.appengine.ext.webapp import template
 # import the users module from appengine
 from google.appengine.api import users
 
+# Creating datastorage for the user review submissions on review page
+class ReviewSubmission(ndb.Model) :
+    recipe_name = ndb.StringProperty(indexed=False)
+    author = ndb.StringProperty(indexed=False)
+    rating = ndb.IntegerProperty(indexed=False)
+    comment = ndb.StringProperty(indexed=False)
+    date = ndb.DateTimeProperty(auto_now_add=True)
+
+def get_key() :
+    return ndb.Key('recipe_name', 'author')
+
+
 # we'll create a simple Model class here.
 class PostName(db.Model) :  
   # this model class has just one property - myname
@@ -25,6 +37,43 @@ class MainPage(webapp2.RequestHandler) :
     }
     path = 'templates/index.html'
     self.response.out.write(template.render(path, template_values))
+
+class ReviewPage(webapp2.RequestHandler) :
+    def get(self) :
+        self.render_reviews()
+ #       self.print_reviews()
+
+    def render_reviews(self) :
+        query = ReviewSubmission.query(ancestor=get_key()).order(
+                ReviewSubmission.date)
+        user_reviews = query.fetch()
+        template_values = {
+            'review_submit' : user_reviews
+        }
+        path = 'templates/review-form.html'
+        self.response.out.write(template.render(path, template_values))
+
+class CommentSection(webapp2.RequestHandler) :
+    def post(self) :
+        try :
+            input_recipe = str(cgi.escape(self.request.get('recipe')))
+            input_author = str(cgi.escape(self.request.get('author')))
+            input_rating = int(cgi.escape(self.request.get('rating')))
+            input_comments = str(cgi.escape(self.request.get('comments')))
+            self.store_comment(input_recipe, input_author, input_rating,
+                           input_comments)
+            self.redirect('/review')
+        except(TypeError, ValueError):
+            self.response.out.write('<html><body>Invalid input</html></body')
+
+    def store_comment(self, input_recipe, input_author, input_rating,
+                      input_comments) :
+        comment = ReviewSubmission(parent=get_key())
+        comment.recipe_name = input_recipe
+        comment.author = input_author
+        comment.rating = input_rating
+        comment.comment = input_comments
+        comment.put()
 
 
 class LoginPage(webapp2.RequestHandler) :
@@ -101,6 +150,6 @@ app = webapp2.WSGIApplication([
   ('/review', ReviewPage),
   ('/login', LoginPage),
   ('/register', RegisterPage),
-  ('/recipe-submit', SubmitPage)
-
+  ('/recipe-submit', SubmitPage),
+  ('/submit_comment', CommentSection)
 ], debug=True)
