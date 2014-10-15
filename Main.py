@@ -45,7 +45,7 @@ class ReviewPage(webapp2.RequestHandler) :
 
     def render_reviews(self) :
         query = ReviewSubmission.query(ancestor=get_key()).order(
-                ReviewSubmission.date)
+                -ReviewSubmission.date)
         user_reviews = query.fetch()
         template_values = {
             'review_submit' : user_reviews,

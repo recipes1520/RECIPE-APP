@@ -95,38 +95,14 @@
                 <!-- USER REVIEWS -->
                 <div class="userReviewPost">
                     <h3>Reviews and Ratings</h3>
-                    <table class="userReviewTable">
-                        <tr>
-                            <td>Username: Cow</td>
-                        </tr>
-                        <tr>
-                            <td>Rating: 0</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>This is disgraceful.  DISLIKE!!!!!11111@@@@</p>
-                            </td>
-                        </tr>
-                    </table>
-                        <table class="userReviewTable">
-                        <tr>
-                            <td>Username: Captain Picard</td>
-                        </tr>
-                        <tr>
-                            <td>Rating: 5</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>This sandwich deserves an award.  Make it so.</p>
-                            </td>
-                        </tr>
-                    </table>
-			
 		    {% for review in review_submit %}
 		    </table>
                         <table class="userReviewTable">
 			<tr>
 			    <td>Recipe: {{ review.recipe_name }}</td>
+			</tr>
+			<tr>
+			    <td>Date: {{ review.date }}</td>
 			</tr>
                         <tr>
                             <td>Username: {{ review.author }}</td>
@@ -141,8 +117,7 @@
                         </tr>
                     </table>
 		    {% endfor %}
-		    		    
-		    
+		    		        
                 </div> <!-- END USER REVIEWS -->
                   <!-- RECIPE REVIEW FORM -->
                 <div class="recipeReview">
