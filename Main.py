@@ -112,15 +112,6 @@ class SubmitPage(webapp2.RequestHandler) :
     path = 'templates/recipe-submission.html'
     self.response.out.write(template.render(path, template_values))
 
-    # This class is a request handler.
-class RegisterPage(webapp2.RequestHandler) :
-  # implementing the get method here allows this class to handle GET requests.
-  def get(self) :
-   
-    template_values = {}
-    path = 'templates/sign-up.html'
-    self.response.out.write(template.render(path, template_values))
-
 def getLoginLink():
   user = users.get_current_user()
   if not user:
@@ -141,7 +132,6 @@ app = webapp2.WSGIApplication([
   ('/', MainPage),
   ('/review', ReviewPage),
   ('/login', LoginPage),
-  ('/register', RegisterPage),
   ('/recipe-submit', SubmitPage),
   ('/submit_comment', CommentSection)
 ], debug=True)
