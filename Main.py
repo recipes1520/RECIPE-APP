@@ -42,7 +42,6 @@ class MainPage(webapp2.RequestHandler) :
 class ReviewPage(webapp2.RequestHandler) :
     def get(self) :
         self.render_reviews()
- #       self.print_reviews()
 
     def render_reviews(self) :
         query = ReviewSubmission.query(ancestor=get_key()).order(
@@ -51,7 +50,7 @@ class ReviewPage(webapp2.RequestHandler) :
         template_values = {
             'review_submit' : user_reviews
         }
-        path = 'templates/review-form.html'
+        path = os.path.join(os.path.dirname(__file__), 'templates/review-form.html')
         self.response.out.write(template.render(path, template_values))
 
 class CommentSection(webapp2.RequestHandler) :
@@ -98,7 +97,7 @@ class LoginPage(webapp2.RequestHandler) :
     path = 'templates/sign-in.html'
     self.response.out.write(template.render(path, template_values))
 
-class ReviewPage(webapp2.RequestHandler) :
+'''class ReviewPage(webapp2.RequestHandler) :
   # implementing the get method here allows this class to handle GET requests.
   def get(self) :
    
@@ -108,7 +107,7 @@ class ReviewPage(webapp2.RequestHandler) :
       'logout_btn': getLogoutLink()
     }
     path = 'templates/review-form.html'
-    self.response.out.write(template.render(path, template_values))
+    self.response.out.write(template.render(path, template_values)) '''
 
 class SubmitPage(webapp2.RequestHandler) :
   # implementing the get method here allows this class to handle GET requests.
