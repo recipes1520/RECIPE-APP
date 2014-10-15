@@ -9,17 +9,14 @@
 <body>
 	<div class="mainContainer">   
 		<div class="navbar">
-      {% if login_btn != '' %}
-			<div class="menuButton"><a href="{{ login_btn }}">Login</a></div>
-      {% else %}
-      <div class="menuButton"><a href="{{ logout_btn }}">Logout</a></div>
-      {% endif %}
-			<div class="menuButton"><a href="#">Recipes</a></div>
-			<div class="menuButton"><a href="#">About</a></div>
-			<div class="menuButton"><a href="#">Features</a></div>
-   	 <div class="menuButton"><a href="http://recipes1520.appspot.com/recipe-submit">Submit Recipe</a></div>
-			<div class="menuButton"><a href="http://recipes1520.appspot.com/">Home</a></div>
-     
+			{% for link in nav_bar %}
+				<div class="menuButton"><a href="{{ link.0 }}">{{link.1}}</a></div>
+			{% endfor %}
+			{% if login_btn != '' %}
+				<div class="menuButton"><a href="{{ login_btn }}">Login</a></div>
+			{% else %}
+				<div class="menuButton"><a href="{{ logout_btn }}">Logout</a></div>
+			{% endif %}
 		</div> <!-- END NAVBAR -->
      
 		<div class="logoContainer"><img src="stylesheets/logo.png"></div>

@@ -12,33 +12,44 @@
         <div class="mainContainer"> 
             <!-- NAVBAR -->
             <div class="navbar">
-			       {% if login_btn != '' %}
-			       <div class="menuButton"><a href="{{ login_btn }}">Login</a></div>
-			       {% else %}
-			       <div class="menuButton"><a href="{{ logout_btn }}">Logout</a></div>
-			       {% endif %}
-        			<div class="menuButton"><a href="http://recipes1520.appspot.com/login">Login</a></div> 
-        			<div class="menuButton"><a href="#">Recipes</a></div>
-        			<div class="menuButton"><a href="#">About</a></div>
-        			<div class="menuButton"><a href="#">Features</a></div>
-        			<div class="menuButton"><a href="http://recipes1520.appspot.com/">Home</a></div>
+			{% for link in nav_bar %}
+				<div class="menuButton"><a href="{{ link.0 }}">{{link.1}}</a></div>
+			{% endfor %}
+			{% if login_btn != '' %}
+				<div class="menuButton"><a href="{{ login_btn }}">Login</a></div>
+			{% else %}
+				<div class="menuButton"><a href="{{ logout_btn }}">Logout</a></div>
+			{% endif %}
             </div> <!-- END NAVBAR -->
             <div class="headerContent">
             </div>
             <!--  RECIPE AND REVIEW FORM CONTENT CONTAINER -->
             <div class="formContentContainer">
+
                 <!-- RECIPE CONTENT CONTAINER-->
                  <div class="recipeContent">
                     <div class="headerContent">
                         <h2> Meet Meat Mountain </h2>
+			<!-- <h2> {{ recipe.title }}</h2> -->
                     </div>
                     <!-- RECIPE MAIN IMAGE -->
                     <div class="recipeMainImg">
                       <img src="img/burger.jpg" alt="Meat Mountain"/>
+		     <!-- <img src= {{ recipe.image }} alt="{{ recipe.title }}" -->
                     </div>
                   <!-- INGREDIENT LIST -->
                     <div class="ingredientList">
                         <h3>List of Ingredients</h3>
+			<!-- <table>
+			    <tr>
+				<td>
+				    <ul>
+					<li> {{ recipe.ingredients }}</li>
+				    </ul>
+				</td>
+			    </tr>
+			</table> -->
+  
                         <table>
                         <tr>
                             <td>
@@ -60,8 +71,8 @@
                             <td>   
                                 <table class="recipeAuthor">
                                     <tr>
-                                        <td>Author: </td>
-                                        <td>Arbys</td>
+                                        <td>Author:</td>
+                                        <!-- <td>{{ recipe.user_id }}</td> -->
                                     </tr>
                                     <tr>
                                         <td>Rating: </td>
@@ -87,11 +98,16 @@
                     <!-- RECIPE DESCRIPTION -->
                     <div class="recipeDescrip">
                         <h3>Description</h3>
-                        <p> Procure the meats from the many different creatures required to prepare this
+                        <p> <!-- {{ recipe.description }} --> Procure the meats from the many different creatures required to prepare this
                         montrosity of a sandwich.  Once you've finished butchering every single last animal in sight only then
                         will you intiate the process of assembling your meat trophy. </p>
                     </div>
+		    <div class="recipeInstructions">
+			<h3> Instructions </h3>
+			<!-- <p> {{ recipe.instructions }} </p> -->
+		    </div>
                  </div> <!-- END RECIPE DESCRIPTION -->
+
                 <!-- USER REVIEWS -->
                 <div class="userReviewPost">
                     <h3>Reviews and Ratings</h3>
