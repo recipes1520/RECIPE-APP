@@ -10,6 +10,12 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: Recipe
+  ancestor: yes
+  properties:
+  - name: title
+    direction: desc
+
 - kind: ReviewSubmission
   ancestor: yes
   properties:

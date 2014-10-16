@@ -73,18 +73,21 @@
 				var ing = document.createElement("input");
 				ing.type = "text";
 				ing.className ="ingInput";
+				ing.name = "ingredients";
 				var parent = document.getElementById("ingredientColumn");
 				parent.appendChild(ing);
 				
 				var q = document.createElement("input");
 				q.type = "text";
 				q.className ="qInput";
+				q.name = "quantities";
 				var parent = document.getElementById("quantityColumn");
 				parent.appendChild(q);
 				
 				var u = document.createElement("input");
 				u.type = "text";
 				u.className ="uInput";
+				u.name = "units";
 				var parent = document.getElementById("unitColumn");
 				parent.appendChild(u);
 			}

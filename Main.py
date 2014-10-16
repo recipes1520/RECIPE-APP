@@ -25,7 +25,7 @@ def get_key() :
 
 class Recipe(ndb.Model) :
 	title = ndb.StringProperty()
-	ingredients = ndb.StringProperty()
+	ingredients = ndb.StringProperty(repeated=True)
 	genre = ndb.StringProperty()
 	description = ndb.TextProperty()
 	time_est = ndb.StringProperty()
@@ -130,31 +130,43 @@ class SubmitPage(webapp2.RequestHandler) :
 		self.response.out.write(template.render(path, template_values))
 	
 	def post(self):
-		recipe = Recipe()
-		try :
-			recipe.title = str(cgi.escape(self.request.get('recipe_title')))
-			recipe.user_id = str(users.get_current_user())
-			recipe.instruction = str(cgi.escape(self.request.get('instruction')))
-			recipe.description = str(cgi.escape(self.request.get('description')))
-			recipe.time_est = str(cgi.escape(self.request.get('prep_time'))) #PREP TIME ONLY.  WILL UPDATE WITH + COOK
-			recipe.genre = str(cgi.escape(self.request.get('category')))
-			recipe.put()
+		recipe = Recipe(parent=get_key())
+		
+		recipe.title = str(cgi.escape(self.request.get('recipe_title')))
+		recipe.user_id = str(users.get_current_user())		
+		recipe.ingredients = self.getIngredients()	
+		recipe.instruction = str(cgi.escape(self.request.get('instruction')))
+		recipe.description = str(cgi.escape(self.request.get('description')))
+		recipe.time_est = str(cgi.escape(self.request.get('prep_time'))) #PREP TIME ONLY.  WILL UPDATE WITH + COOK
+		recipe.genre = str(cgi.escape(self.request.get('category')))
+		recipe.put()
+		
+		self.redirect('/recipe-submit')
+		
+	
+	
+	def getIngredients(self) :
+			ingredients = str(cgi.escape(self.request.get('ingredients')))
+			quantities = str(cgi.escape(self.request.get('quantities')))
+			units = str(cgi.escape(self.request.get('units')))
 			
-			self.redirect('/recipe-submit')
-		except(TypeError, ValueError):
-			self.response.out.write('<html><body>Invalid input</html></body')
+			list = []
+			for ing in zip(ingredients, quantities, units) :
+				list.append( ing[1] + " " + ing[2] + " " + ing[0] )
+			
+			return list
 
 class SearchHandler(webapp2.RequestHandler) :
 	def post(self) :
 
 			search_query = self.request.get('searchInput')
-			query = ReviewSubmission.query(ancestor=get_key()).order(
-					-ReviewSubmission.date)
+			query = Recipe.query(ancestor=get_key()).order(
+					-Recipe.title)
 			recipes = query.fetch()
 
 			recipe_titles = []
 			for recipe in recipes :
-				recipe_titles.append((recipe.recipe_name, recipe.recipe_name.replace(" ", "_")))
+				recipe_titles.append((recipe.title, recipe.title.replace(" ", "_")))
 
 			template_values = {
 			  'login_btn': getLoginLink(),
