@@ -118,7 +118,7 @@ class SubmitPage(webapp2.RequestHandler) :
 	
 def getNavBar():
 	navBarTitles = ['Home', 'Submit Recipe', 'Featured', 'About']
-	navBarLinks = ['/', 'recipe-submit', '#', '#'];
+	navBarLinks = ['/', 'recipe-submit', '/review', '#'];
 	return zip(navBarLinks, navBarTitles)
 	
 def getLoginLink():
