@@ -23,7 +23,15 @@ class ReviewSubmission(ndb.Model) :
 def get_key() :
     return ndb.Key('recipe_name', 'author')
 
-
+class Recipe(ndb.Model) :
+	title = ndb.StringProperty()
+	ingredients = ndb.StringProperty()
+	genre = ndb.StringProperty()
+	description = ndb.TextProperty()
+	time_est = ndb.StringProperty()
+	instruction = ndb.StringProperty()
+	user_id = ndb.StringProperty()
+	
 # we'll create a simple Model class here.
 class PostName(ndb.Model) :
   # this model class has just one property - myname
@@ -110,16 +118,31 @@ class LoginPage(webapp2.RequestHandler) :
 
 class SubmitPage(webapp2.RequestHandler) :
   # implementing the get method here allows this class to handle GET requests.
-  def get(self) :
+	def get(self) :
 
-    template_values = {
-      'login_btn': getLoginLink(),
-      'logout_btn': getLogoutLink(),
-	  'nav_bar' : getNavBar(),
-      'current_user' : users.get_current_user()
-    }
-    path = 'templates/recipe-submission.html'
-    self.response.out.write(template.render(path, template_values))
+		template_values = {
+		    'login_btn': getLoginLink(),
+		    'logout_btn': getLogoutLink(),
+		    'nav_bar' : getNavBar(),
+		    'current_user' : users.get_current_user()
+		}
+		path = 'templates/recipe-submission.html'
+		self.response.out.write(template.render(path, template_values))
+	
+	def post(self):
+		recipe = Recipe()
+		try :
+			recipe.title = str(cgi.escape(self.request.get('recipe_title')))
+			recipe.user_id = str(users.get_current_user())
+			recipe.instruction = str(cgi.escape(self.request.get('instruction')))
+			recipe.description = str(cgi.escape(self.request.get('description')))
+			recipe.time_est = str(cgi.escape(self.request.get('prep_time'))) #PREP TIME ONLY.  WILL UPDATE WITH + COOK
+			recipe.genre = str(cgi.escape(self.request.get('category')))
+			recipe.put()
+			
+			self.redirect('/recipe-submit')
+		except(TypeError, ValueError):
+			self.response.out.write('<html><body>Invalid input</html></body')
 
 class SearchHandler(webapp2.RequestHandler) :
 	def post(self) :
