@@ -181,7 +181,7 @@ class SearchHandler(webapp2.RequestHandler) :
 
 class RecipeDisplay(webapp2.RequestHandler) :
 	def get(self) :
-		search_query = self.request.get('searchInput')
+		
 		query = Recipe.query(Recipe.title == "Big Taco")
 		q = query.fetch()
 
