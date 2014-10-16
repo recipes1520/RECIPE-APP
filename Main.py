@@ -2,6 +2,7 @@
 import cgi
 import webapp2
 import os
+import urlparse
 
 #Just seeing if I'm using git right
 
@@ -180,10 +181,17 @@ class SearchHandler(webapp2.RequestHandler) :
 
 class RecipeDisplay(webapp2.RequestHandler) :
 	def get(self) :
+		search_query = self.request.get('searchInput')
+		query = Recipe.query(Recipe.title == "Big Taco")
+		q = query.fetch()
+
+		recipe = q[0]
+
 		template_values = {
 		  'login_btn': getLoginLink(),
 		  'logout_btn': getLogoutLink(),
 		  'nav_bar' : getNavBar(),
+		  'recipe' : recipe
 		}
 		path = "templates/recipe-display.html"
 		self.response.out.write(template.render(path, template_values))

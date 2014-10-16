@@ -1,22 +1,33 @@
 {% extends "base.html" %}
 {% block bodycontent %}
+
 <div>
-	<form id="form" method="get" action="recipe-display/recipe">
-		<input name="parseIt()" id="frm" type="hidden"></input>
-	</form>
+	{% for ing in ingredients %}
+		{{ing}}
+	{% endfor %}
+	
+				 <h2> {{ recipe.title }}</h2> 
+                    </div>
+                    <!-- RECIPE MAIN IMAGE -->
+                    <div class="recipeMainImg">
+                      <img src="img/burger.jpg" alt="Meat Mountain" height="400" width="400"/>
+                    </div>
+                  <!-- INGREDIENT LIST -->
+                    <div class="ingredientList">
+                        <h3>List of ingredients</h3>
+			 <table>
+			    <tr>
+				<td>
+				    <ul>
+						{% for ing in recipe.ingredients %}
+	
+					<li> {{ ing }}</li>
+						{% endfor %}
+				    </ul>
+				</td>
+			    </tr>
+			</table> 
+
 </div>
-<script type = "text/javascript">
-	function parseIt(){
-		var pathArray = window.location.pathname.split('/');
-		var l = pathArray.length;
-		var recipeName = pathArray[length - 1];
-		recipeName = recipeName.replace('_', ' ');
-		
-		return recipeName;
-	}
-	function callIt(){
-		document.getElementByID("frm").submit();
-	}
-</script>
 
 {% endblock %}
