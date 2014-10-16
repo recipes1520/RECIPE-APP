@@ -26,29 +26,28 @@
 
 body{
     font-family: 'Roboto', sans-serif;
-    color: #2A3A48; 
-    background-color: #FAFAFF;
+    color: #343538; 
+    background-color: #F0F2F2;
 }
 
 .mainContainer {
-    /* margin: 0 auto; */
+    margin: 0 auto; 
     width: 100%;
     height: 100%;
-    /* color: #C45024;*/
+    /*color: #FDFDFD;*/
 }
 
 a {
     text-decoration: none;
-    color: #2A3A48;
+    color: #343538;
 }
 
 .headerContent {
-    font-family: 'Indie Flower', cursive;
-    font-size: 2em;
+    font-size: 30px;
     text-align: center;
     width: 100%;
     margin: 0 auto;
-    color: #BE1623;
+    color: #4456B0;
 }
 
 a {
@@ -63,11 +62,11 @@ a {
     padding-right: 1em;
     margin: 0 auto;
     float: none;
-    width: 75em;
+    width: 90%;
+    min-width: 40em;
     height: auto;
     text-align: left;
-    /*background-color: #FAFAFF;*/
-    background-color: #B2D4EA;
+    background-color: #F0F2F2;
 }
 
 .menuButton {
@@ -81,7 +80,7 @@ a {
 }
 
 .menuButton:hover, .menuButton:hover > a {
-    background-color: #A2C2D7;
+    background-color: #586CDE;
     color: white;
     padding-top: 1em;
     padding-bottom: 1em;
@@ -95,12 +94,11 @@ a {
     padding-bottom: 3em;
     padding-left: 4em;
     padding-right: 4em;
-    width: auto;
-    max-width: 40em;
+    width: 100%;
+    max-width: 47em;
     height: auto;
-    background-color: #fff;
+    background-color: white;
     box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.24);
-    border-radius: 10px; 
 }
 
 input, textarea {
@@ -117,12 +115,12 @@ input:focus, textarea:focus {
     outline: none !important;
     box-shadow: none !important;
     border: solid 1px;
-    border-color: #B2D4EA;
+    border-color: #586CDE;
 }
 
 input:hover, textarea:hover {
     border: solid 1px;
-    border-color: #B2D4EA;
+    border-color: #586CDE;
     animation: none;
 }
 
@@ -138,7 +136,7 @@ input:hover, textarea:hover {
     outline: none !important;
     color: white;
     border: none;
-    background-color: #B2D4EA !important;
+    background-color: #586CDE !important;
 }
 
 
@@ -146,7 +144,7 @@ input:hover, textarea:hover {
     outline: none !important;
     color: white;
     border: none;
-    background-color: #A2C2D7 !important;
+    background-color: #4456B0 !important;
     box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.24);
     position: relative;
     top: -2px;
@@ -158,42 +156,86 @@ input:hover, textarea:hover {
     display: block;
 }
 
-.userReviewPost, .recipeDescrip, .recipeTime, ingredientList {
+
+.recipeDescrip {
     padding-top: 5px;
+}
+
+.recipeTime {
+    padding-top: 2px;   
+}
+
+.recipeInstructions {
+    padding-top: 1px;
+}
+
+.userReviewPost {
+    padding-top: 2px;
 }
 
 .recipeAuthor {
     text-align: center;
     color: white;
     padding: 2em;
-    margin-left:  15em;
+    margin-left:  20em;
     margin-bottom: 12em;
-    width: 10em;
-    background-color: #B2D4EA;
+    width: 10em; 
+    background-color: #586CDE;
 }
 
 .recipeAuthor:hover {
    outline: none !important;
     color: white;
     border: none;
-    background-color: #A2C2D7 !important;
+    margin-left:  20em;
+    background-color: #4456B0 !important;
     box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.24);
     position: relative;
     top: -2px;   
 }
 
+.userReviewTable {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 25px;
+    box-shadow: inset 0 -1px 1px rgba(0,0,0,0.5), /*bottom internal shadow*/
+    inset 0 1px 1px rgba(255,255,255,1); /*top internal highlight*/
+}
+
+h3 {
+    color: #4456B0;
+}
+
+#description {
+    padding-top: 10em;
+}
+
+#instructions {
+    padding-top: 10px !important;
+}
+
+#comment {
+    font-family: 'Bad Script', cursive;
+    font-size: 1.2em;
+}
+
 /* STEVE'S RECIPE SUBMISSION SPECIFIC STUFF
 the recipe submission version of formContent*/
 .submissionCard {
-	margin: 0 auto;
-    margin-top: 5em;
+    margin: 0 auto;
+    margin-top: 2em;
     padding: 5em;
+    width: 100%;
     min-height: 13em;
     min-width: 5em;
-	max-width: 70%;
+    max-width: 47em;
     background-color: #fff;
     box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.24);
-    border-radius: 10px;        /* Added */
+   /* border-radius: 10px;        /* Added */
+}
+
+.button {
+    margin-top: 15px;
 }
 
 #ingredientColumn{
@@ -215,16 +257,24 @@ the recipe submission version of formContent*/
 }
 
 #addIngredient {
-	width: 15em;
+    width: 15em;
     text-align: center;
     margin: 0 auto;
     outline: none !important;
-    color: ffffff;
+    color: white;
     border: none;
-    background-color: #B2D4EA !important;
-    border-radius: 5px; /* Added this*/
-	clear: both;
-	float: right;
+    background-color: #586CDE !important;
+   /* border-radius: 5px; /* Added this*/
+    clear: both;
+    /* float: right; */
+    float: left;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#addIngredient:hover {
+    background-color: #4456B0 !important;
+    box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.24);
 }
 /*END SUBMISSION SPECIFIC STUFF*/
 

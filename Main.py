@@ -35,7 +35,8 @@ class MainPage(webapp2.RequestHandler) :
     template_values = {
       'login_btn': getLoginLink(),
       'logout_btn': getLogoutLink(),
-	  'nav_bar' : getNavBar()
+	  'nav_bar' : getNavBar(),
+      'current_user' : users.get_current_user()
     }
     path = 'templates/index.html'
     self.response.out.write(template.render(path, template_values))
@@ -52,7 +53,8 @@ class ReviewPage(webapp2.RequestHandler) :
             'review_submit' : user_reviews,
             'login_btn': getLoginLink(),
             'logout_btn': getLogoutLink(),
-			'nav_bar' : getNavBar()
+			'nav_bar' : getNavBar(),
+            'current_user' : users.get_current_user()
         }
         path = os.path.join(os.path.dirname(__file__), 'templates/review-form.html')
         self.response.out.write(template.render(path, template_values))
@@ -61,7 +63,6 @@ class CommentSection(webapp2.RequestHandler) :
     def post(self) :
         try :
             input_recipe = str(cgi.escape(self.request.get('recipe')))
- #           input_author = str(cgi.escape(self.request.get('author')))
             input_author = str(users.get_current_user())
             input_rating = int(cgi.escape(self.request.get('rating')))
             input_comments = str(cgi.escape(self.request.get('comments')))
@@ -94,11 +95,12 @@ class LoginPage(webapp2.RequestHandler) :
       logout = users.create_logout_url('/')
     else:
       login = users.create_login_url('/')
-   
+
     template_values = {
       'login': login,
       'logout': logout,
-	  'nav_bar' : getNavBar()
+	  'nav_bar' : getNavBar(),
+      'current_user' : users.get_current_user()
     }
     path = 'templates/sign-in.html'
     self.response.out.write(template.render(path, template_values))
@@ -111,16 +113,17 @@ class SubmitPage(webapp2.RequestHandler) :
     template_values = {
       'login_btn': getLoginLink(),
       'logout_btn': getLogoutLink(),
-	  'nav_bar' : getNavBar()
+	  'nav_bar' : getNavBar(),
+      'current_user' : users.get_current_user()
     }
     path = 'templates/recipe-submission.html'
     self.response.out.write(template.render(path, template_values))
-	
+
 def getNavBar():
 	navBarTitles = ['Home', 'Submit Recipe', 'Featured', 'About']
 	navBarLinks = ['/', 'recipe-submit', '#', '#'];
 	return zip(navBarLinks, navBarTitles)
-	
+
 def getLoginLink():
   user = users.get_current_user()
   if not user:

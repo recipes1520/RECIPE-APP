@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" content="html/text"/>
+        <title>Recipes</title>
+
+        <!-- Our Stylesheet -->
+        <link href="stylesheets/style.css" type="text/css" rel="stylesheet"/>
+        
+        <!-- Google fonts -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Bad+Script' rel='stylesheet' type='text/css'>
+            
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" type="text/javascript" ></script>
+
+    </head>
+    <body>
+        <div class="mainContainer"> <!-- MAIN CONTAINER -->
+         <!-- NAVBAR -->
+            <div class="navbar">
+                {% for link in nav_bar %}
+                <div class="menuButton"><a href="{{ link.0 }}">{{link.1}}</a></div>
+                {% endfor %}
+                {% if login_btn != '' %}
+                        <div class="menuButton"><a href="{{ login_btn }}">Login</a></div>
+                {% else %}
+                        <div class="menuButton"><a href="{{ logout_btn }}">Logout</a></div>
+                {% endif %}
+                <div class="menuButton"> {{ current_user }} </div>
+            </div> <!-- END NAVBAR -->
+    {% block bodycontent %}
+    {% endblock %}
+        </div> 
+    </body>
+    </html>

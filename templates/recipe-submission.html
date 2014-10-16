@@ -1,49 +1,56 @@
-<html>
-    <head>
-        <meta charset="utf-8" content="html/text"/>
-        <title>Recipe Submission</title>
-        <!-- <link href="css_reset.css" type="text/css" rel="stylesheet"/> -->
-        <link href="stylesheets/style.css" type="text/css" rel="stylesheet"/>
-        <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
-    </head>
-	<body>
-		<div class="mainContainer"> <!-- MAIN CONTAINER -->
-            <!-- NAVBAR -->
-            <div class="navbar">
-				{% for link in nav_bar %}
-				<div class="menuButton"><a href="{{ link.0 }}">{{link.1}}</a></div>
-				{% endfor %}
-				{% if login_btn != '' %}
-					<div class="menuButton"><a href="{{ login_btn }}">Login</a></div>
-				{% else %}
-					<div class="menuButton"><a href="{{ logout_btn }}">Logout</a></div>
-				{% endif %}
-            </div> <!-- END NAVBAR -->
-            <div class="headerContent">
-                <h2> Recipe Submission</h2>
-            </div>
+{% extends "base.html" %}
+{% block bodycontent %}
 			<div class="submissionCard"><!--start of virtual recipe card-->
+			        <div class="headerContent">
+				    <h2> Recipe Submission</h2>
+				</div>
 				<form method="post">
-					<div id="ingredientColumn">
-						<p>Ingredients</p>
-						<input type="text" class="ingInput" placeholder="ingredient" name="ingredients">
+					<h3>Recipe name</h3>
+					<div id="recipeTitle">
+					    <input type="text" placeholder="Recipe Name" name="recipe_title">
 					</div>
-					<div id="quantityColumn">
-					<p>Quantity</p>
-						<input type="text" class="qInput" placeholder="quantity" name="quantities">
+					<div class="addIngredContainer">
+					    <h3>Ingredients and description</h3>
+					    <div id="ingredientColumn">
+						    <p>Ingredients</p>
+						    <input type="text" class="ingInput" placeholder="ingredient" name="ingredients">
+					    </div>
+					    <div id="quantityColumn">
+					    <p>Quantity</p>
+						    <input type="text" class="qInput" placeholder="quantity" name="quantities">
+					    </div>
+					    <div id="unitColumn">
+					    <p>Units</p>
+						    <input type="text" class="uInput" placeholder="units e.g. tsp, tbsp, cups..." name="units">
+					    </div>
+					    <div id="addIngredient" onclick="addIngredient();">
+						    <p>Add Ingredient</p>
+					    </div>
 					</div>
-					<div id="unitColumn">
-					<p>Units</p>
-						<input type="text" class="uInput" placeholder="units e.g. tsp, tbsp, cups..." name="units">
+					
+					<div id="description">
+					    <!-- <h3>Description</h3> -->
+					    <textarea rows="4" cols="50" placeholder="Description" name="description"></textarea>
 					</div>
-					<div id="addIngredient" onclick="addIngredient();">
-						<p>Add Ingredient</p>
+					<div id="instructions">
+					    <textarea rows="4" cols="50" placeholder="Instructions" name="instruction"></textarea>
 					</div>
-					<textarea rows="4" cols="50" placeholder="Instructions" name="comments"></textarea>
+					<table>
+					    <h3>Time estimation</h3>
+					    <tr>
+						<td><input type="text" placeholder="Preparation time" name="prep_time"></td>
+					    </tr>
+					    <tr>
+						<td><input type="text" placeholder="Cooking time" name="cook_time"></td>
+					    </tr>
+					</table>
+					<div id="image_upload">
+					    <h3>Photo upload</h3>
+					    <input type="file" name="img"/>
+					</div>
 					<div class="button">
-                        <input type="submit" value="submit">
-                    </div>
+					    <input type="submit" value="submit">
+					</div>
 				</form>
 			</div><!--end of virtual recipe card-->
 		</div><!--end of main container-->
@@ -69,5 +76,4 @@
 				parent.appendChild(u);
 			}
 		</script>
-	</body>
-</html>
+{% endblock %}

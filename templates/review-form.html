@@ -1,26 +1,5 @@
-<!DOCTYPE html>
-    <head>
-        <meta charset="utf-8" content="html/text"/>
-        <title>Sandwiches - Receipes</title>
-        <!-- <link href="css_reset.css" type="text/css" rel="stylesheet"/> -->
-        <link href="stylesheets/style.css" type="text/css" rel="stylesheet"/>
-        <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
-    </head>
-    <body>
-        <!-- MAIN CONTAINER -->
-        <div class="mainContainer"> 
-            <!-- NAVBAR -->
-            <div class="navbar">
-			{% for link in nav_bar %}
-				<div class="menuButton"><a href="{{ link.0 }}">{{link.1}}</a></div>
-			{% endfor %}
-			{% if login_btn != '' %}
-				<div class="menuButton"><a href="{{ login_btn }}">Login</a></div>
-			{% else %}
-				<div class="menuButton"><a href="{{ logout_btn }}">Logout</a></div>
-			{% endif %}
-            </div> <!-- END NAVBAR -->
+{% extends "base.html" %}
+{% block bodycontent %}
             <div class="headerContent">
             </div>
             <!--  RECIPE AND REVIEW FORM CONTENT CONTAINER -->
@@ -34,12 +13,12 @@
                     </div>
                     <!-- RECIPE MAIN IMAGE -->
                     <div class="recipeMainImg">
-                      <img src="img/burger.jpg" alt="Meat Mountain"/>
+                      <img src="img/burger.jpg" alt="Meat Mountain" height="400" width="400"/>
 		     <!-- <img src= {{ recipe.image }} alt="{{ recipe.title }}" -->
                     </div>
                   <!-- INGREDIENT LIST -->
                     <div class="ingredientList">
-                        <h3>List of Ingredients</h3>
+                        <h3>List of ingredients</h3>
 			<!-- <table>
 			    <tr>
 				<td>
@@ -76,7 +55,7 @@
                                     </tr>
                                     <tr>
                                         <td>Rating: </td>
-                                        <td>100%</td>
+                                        <td>5</td>
                                     </tr>
                                 </table>
                             </td>
@@ -85,7 +64,7 @@
                     </div> <!-- END INGREDIENT LIST -->
                     <!-- TIME ESTIMATION -->
                     <div class="recipeTime">
-                        <h3>Time Estimation</h3>
+                        <h3>Time estimation</h3>
                         <table>
                             <tr>
                                 <td>Preparation:</td><td>1</td><td>Week</td>
@@ -104,42 +83,46 @@
                     </div>
 		    <div class="recipeInstructions">
 			<h3> Instructions </h3>
+			<p> Cook it and then set it ablaze. </p>
 			<!-- <p> {{ recipe.instructions }} </p> -->
 		    </div>
                  </div> <!-- END RECIPE DESCRIPTION -->
 
                 <!-- USER REVIEWS -->
                 <div class="userReviewPost">
-                    <h3>Reviews and Ratings</h3>
+		    <h3>Reviews and ratings</h3>
 		    {% for review in review_submit %}
-		    </table>
-                        <table class="userReviewTable">
-			<tr>
+                    <table class="userReviewTable">
+			<!-- <tr>
 			    <td>Recipe: {{ review.recipe_name }}</td>
-			</tr>
-			<tr>
-			    <td>Date: {{ review.date }}</td>
-			</tr>
+			</tr> -->
                         <tr>
-                            <td>Username: {{ review.author }}</td>
+                            <td>{{ review.author }}</td>
                         </tr>
+			<tr>
+			    <td>{{ review.date }}</td>
+			</tr>
                         <tr>
-                            <td>Rating: {{ review.rating }}</td>
+                            <td id="rate">{{ review.rating }} out of 5</td>
                         </tr>
                         <tr>
                             <td>
-                                <p>Comment: {{ review.comment }}</p>
+                                <p id="comment">{{ review.comment }}</p>
                             </td>
                         </tr>
                     </table>
-		    {% endfor %}
-		    		        
+		    {% endfor %}   		        
                 </div> <!-- END USER REVIEWS -->
                   <!-- RECIPE REVIEW FORM -->
                 <div class="recipeReview">
                     <h3> Submit Your Review </h3>
                     <form action="/submit_comment" method="post">
-                        <input type="text" placeholder="Receipe Name" name="recipe" id="recipe" maxlength=255 required=TRUE/> <br>
+                        <!-- <input type="text" placeholder="Receipe Name" name="recipe" id="recipe" maxlength=255 required=TRUE/> <br> -->
+			<table id="user_info_review">
+			    <tr>
+				<td>{{ current_user }}</td>
+			    </tr>
+			</table>
                         <!--<input type="text" placeholder="Receipe Author" name="author" id="author" maxlength=255 required=TRUE/> <br> -->
                         <label class=radioLabel"> Rating: </label>
                         <label class="radioLabel">
@@ -167,6 +150,4 @@
                     </form>
                 </div>  <!-- END RECIPE REVIEW FORM  CONTAINER-->
             </div> <!-- END RECEIPE AND REVIEW FORM CONTENT -->
-        </div> <!-- END MAIN CONTAINER -->
-    </body>
-</html>
+{% endblock %}
