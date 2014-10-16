@@ -146,9 +146,9 @@ class SubmitPage(webapp2.RequestHandler) :
 	
 	
 	def getIngredients(self) :
-			ingredients = str(cgi.escape(self.request.get('ingredients')))
-			quantities = str(cgi.escape(self.request.get('quantities')))
-			units = str(cgi.escape(self.request.get('units')))
+			ingredients = self.request.get_all('ingredients')
+			quantities = self.request.get_all('quantities')
+			units = self.request.get_all('units')
 			
 			list = []
 			for ing in zip(ingredients, quantities, units) :
@@ -178,6 +178,17 @@ class SearchHandler(webapp2.RequestHandler) :
 			path = 'templates/search-results.html'
 			self.response.out.write(template.render(path, template_values))
 
+class RecipeDisplay(webapp2.RequestHandler) :
+	def get(self) :
+		template_values = {
+		  'login_btn': getLoginLink(),
+		  'logout_btn': getLogoutLink(),
+		  'nav_bar' : getNavBar(),
+		}
+		path = "templates/recipe-display.html"
+		self.response.out.write(template.render(path, template_values))
+		
+		
 def getNavBar():
 	navBarTitles = ['Home', 'Submit Recipe', 'Featured', 'About']
 	navBarLinks = ['/', 'recipe-submit', '/review', '#'];
@@ -212,5 +223,7 @@ app = webapp2.WSGIApplication([
   ('/login', LoginPage),
   ('/recipe-submit', SubmitPage),
   ('/submit_comment', CommentSection),
-  ('/search', SearchHandler)
+  ('/search', SearchHandler),
+  ('/recipe-display/.*', RecipeDisplay),
+  ('/recipes/.*', RecipeDisplay),
 ], debug=True)
