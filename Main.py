@@ -119,21 +119,18 @@ class SubmitPage(webapp2.RequestHandler) :
     path = 'templates/recipe-submission.html'
     self.response.out.write(template.render(path, template_values))
 
-<<<<<<< HEAD
-=======
 class SearchHandler(webapp2.RequestHandler) :
-	
 	def post(self) :
-		
+
 			search_query = self.request.get('searchInput')
 			query = ReviewSubmission.query(ancestor=get_key()).order(
 					-ReviewSubmission.date)
 			recipes = query.fetch()
-			
+
 			recipe_titles = []
 			for recipe in recipes :
 				recipe_titles.append((recipe.recipe_name, recipe.recipe_name.replace(" ", "_")))
-		
+
 			template_values = {
 			  'login_btn': getLoginLink(),
 			  'logout_btn': getLogoutLink(),
@@ -143,9 +140,7 @@ class SearchHandler(webapp2.RequestHandler) :
 			}
 			path = 'templates/search-results.html'
 			self.response.out.write(template.render(path, template_values))
-		
-	
->>>>>>> cf8e893a5fcedeb4b2aaf2110eae31a30aab4184
+
 def getNavBar():
 	navBarTitles = ['Home', 'Submit Recipe', 'Featured', 'About']
 	navBarLinks = ['/', 'recipe-submit', '/review', '#'];
