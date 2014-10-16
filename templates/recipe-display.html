@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block bodycontent %}
+<div>
+	<form id="form">
+		<input name="parseIt()" id="frm" type="hidden"></input>
+	</form>
+</div>
+<script type = "text/javascript">
+	function parseIt(){
+		var pathArray = window.location.pathname.split('/');
+		var l = pathArray.length;
+		var recipeName = pathArray[length - 1];
+		recipeName = recipeName.replace('_', ' ');
+		
+		return recipeName;
+	}
+	function callIt(){
+		document.getElementByID("frm").submit();
+	}
+</script>
+
+{% endblock %}
