@@ -19,9 +19,9 @@
 	padding-left: 5px;
 }
 
-.searchButton{
-	
-}
+.searchResultContainer{
+	margin: 0 auto;    margin-top: 2em;    padding-top: 2px;    padding-bottom: 3em;    padding-left: 4em;    padding-right: 4em;    width: auto;    max-width: 68em;    height: auto;    background-color: #fff;    box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.24);    border-radius: 10px; 
+}.searchResultTable{    margin-left:auto;     margin-right:auto;	text-align: center;}.searchResult{	font-size: 24pt;	padding-bottom: 1em;}
 	
 
 body{
@@ -225,6 +225,6 @@ the recipe submission version of formContent*/
     border-radius: 5px; /* Added this*/
 	clear: both;
 	float: right;
-}
+	}
 /*END SUBMISSION SPECIFIC STUFF*/
 

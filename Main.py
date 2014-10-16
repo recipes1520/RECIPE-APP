@@ -115,6 +115,29 @@ class SubmitPage(webapp2.RequestHandler) :
     }
     path = 'templates/recipe-submission.html'
     self.response.out.write(template.render(path, template_values))
+
+class SearchHandler(webapp2.RequestHandler) :
+	
+	def post(self) :
+		
+			search = self.request.get('search_input')
+			query = ReviewSubmission.query(ancestor=get_key()).order(
+					-ReviewSubmission.date)
+			recipes = query.fetch()
+			
+			recipe_titles = []
+			for recipe in recipes :
+				recipe_titles.append((recipe.recipe_name, recipe.recipe_name.replace(" ", "_")))
+		
+			template_values = {
+			  'login_btn': getLoginLink(),
+			  'logout_btn': getLogoutLink(),
+			  'nav_bar' : getNavBar(),
+			  'recipes' : recipe_titles
+			}
+			path = 'templates/search-results.html'
+			self.response.out.write(template.render(path, template_values))
+		
 	
 def getNavBar():
 	navBarTitles = ['Home', 'Submit Recipe', 'Featured', 'About']
@@ -142,5 +165,6 @@ app = webapp2.WSGIApplication([
   ('/review', ReviewPage),
   ('/login', LoginPage),
   ('/recipe-submit', SubmitPage),
-  ('/submit_comment', CommentSection)
+  ('/submit_comment', CommentSection),
+  ('/search', SearchHandler)
 ], debug=True)
