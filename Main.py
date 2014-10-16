@@ -120,7 +120,7 @@ class SearchHandler(webapp2.RequestHandler) :
 	
 	def post(self) :
 		
-			search = self.request.get('search_input')
+			search_query = self.request.get('searchInput')
 			query = ReviewSubmission.query(ancestor=get_key()).order(
 					-ReviewSubmission.date)
 			recipes = query.fetch()
@@ -133,7 +133,8 @@ class SearchHandler(webapp2.RequestHandler) :
 			  'login_btn': getLoginLink(),
 			  'logout_btn': getLogoutLink(),
 			  'nav_bar' : getNavBar(),
-			  'recipes' : recipe_titles
+			  'recipes' : recipe_titles,
+			  'search_query': search_query
 			}
 			path = 'templates/search-results.html'
 			self.response.out.write(template.render(path, template_values))

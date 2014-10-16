@@ -20,8 +20,8 @@
 }
 
 .searchResultContainer{
-	margin: 0 auto;    margin-top: 2em;    padding-top: 2px;    padding-bottom: 3em;    padding-left: 4em;    padding-right: 4em;    width: auto;    max-width: 68em;    height: auto;    background-color: #fff;    box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.24);    border-radius: 10px; 
-}.searchResultTable{    margin-left:auto;     margin-right:auto;	text-align: center;}.searchResult{	font-size: 24pt;	padding-bottom: 1em;}
+	margin: 0 auto;    margin-top: 2em;    padding-top: 2px;    padding-bottom: 3em;    width: auto;    max-width: 68em;    height: auto;    background-color: #fff;    box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.24);    border-radius: 10px; 
+}.searchResultTable{    margin-left:auto;     margin-right:auto;	text-align: left;	width: 100%;}.searchResult{	font-size: 24pt;	padding-top: .5em;	padding-bottom: .5em;	padding-left: .5em;	border-bottom: 1pt solid black; ;	}.searchInformation{	text-align: center;	color: red;}
 	
 
 body{

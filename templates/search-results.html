@@ -21,6 +21,9 @@
 		{% endif %}   
 		</div> <!-- END NAVBAR -->
 		
+		<div class="searchInformation">
+			<br>Displaying {{recipes|length}} results for "{{search_query}}"
+		</div>
 		<div class="searchResultContainer">
 			<table class="searchResultTable">
 				{% for recipe in recipes %}
