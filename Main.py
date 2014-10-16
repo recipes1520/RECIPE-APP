@@ -41,12 +41,12 @@ class PostName(ndb.Model) :
 class MainPage(webapp2.RequestHandler) :
   # implementing the get method here allows this class to handle GET requests.
   def get(self) :
-
+	
     template_values = {
       'login_btn': getLoginLink(),
       'logout_btn': getLogoutLink(),
 	  'nav_bar' : getNavBar(),
-      'current_user' : users.get_current_user()
+      'current_user' : getCurrentUser()
     }
     path = 'templates/index.html'
     self.response.out.write(template.render(path, template_values))
@@ -64,7 +64,7 @@ class ReviewPage(webapp2.RequestHandler) :
             'login_btn': getLoginLink(),
             'logout_btn': getLogoutLink(),
 			'nav_bar' : getNavBar(),
-            'current_user' : users.get_current_user()
+            'current_user' : getCurrentUser()
         }
         path = os.path.join(os.path.dirname(__file__), 'templates/review-form.html')
         self.response.out.write(template.render(path, template_values))
@@ -110,7 +110,7 @@ class LoginPage(webapp2.RequestHandler) :
       'login': login,
       'logout': logout,
 	  'nav_bar' : getNavBar(),
-      'current_user' : users.get_current_user()
+      'current_user' : getCurrentUser()
     }
     path = 'templates/sign-in.html'
     self.response.out.write(template.render(path, template_values))
@@ -124,7 +124,7 @@ class SubmitPage(webapp2.RequestHandler) :
 		    'login_btn': getLoginLink(),
 		    'logout_btn': getLogoutLink(),
 		    'nav_bar' : getNavBar(),
-		    'current_user' : users.get_current_user()
+		    'current_user' : getCurrentUser()
 		}
 		path = 'templates/recipe-submission.html'
 		self.response.out.write(template.render(path, template_values))
@@ -170,6 +170,13 @@ def getNavBar():
 	navBarTitles = ['Home', 'Submit Recipe', 'Featured', 'About']
 	navBarLinks = ['/', 'recipe-submit', '/review', '#'];
 	return zip(navBarLinks, navBarTitles)
+
+def getCurrentUser() :
+	user = users.get_current_user()
+	if not user :
+		return ''
+	else :
+		return user
 
 def getLoginLink():
   user = users.get_current_user()
