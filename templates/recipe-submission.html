@@ -11,18 +11,18 @@
 					</div>
 					<div class="addIngredContainer">
 					    <h3>Ingredients and description</h3>
-					    <div id="ingredientColumn">
-						    <p>Ingredients</p>
-						    <input type="text" class="ingInput" placeholder="ingredient" name="ingredients">
-					    </div>
-					    <div id="quantityColumn">
-					    <p>Quantity</p>
-						    <input type="text" class="qInput" placeholder="quantity" name="quantities">
-					    </div>
-					    <div id="unitColumn">
-					    <p>Units</p>
-						    <input type="text" class="uInput" placeholder="units e.g. tsp, tbsp, cups..." name="units">
-					    </div>
+                        <table id="recipeTable">
+                            <tr id="tableLabels">
+                                <td>Ingredients</td>
+                                <td>Quantity</td>
+                                <td>Units</td>
+                            </tr>
+                            <tr id="userInput" class="ingInput">
+                                <td><input type="text" class="ingInput" placeholder="ingredient" name="ingredients"></td>
+                                <td><input type="text" class="qInput" placeholder="quantity" name="quantities"></td>
+                                <td><input type="text" class="uInput" placeholder="units e.g. tsp, tbsp, cups..." name="units"></td>
+                            </tr>
+                        </table>
 					    <div id="addIngredient" onclick="addIngredient();">
 						    <p>Add Ingredient</p>
 					    </div>
@@ -70,26 +70,10 @@
 		<!--script to add ingredients-->
 		<script type = "text/javascript">
 			function addIngredient(){
-				var ing = document.createElement("input");
-				ing.type = "text";
-				ing.className ="ingInput";
-				ing.name = "ingredients";
-				var parent = document.getElementById("ingredientColumn");
-				parent.appendChild(ing);
-				
-				var q = document.createElement("input");
-				q.type = "text";
-				q.className ="qInput";
-				q.name = "quantities";
-				var parent = document.getElementById("quantityColumn");
-				parent.appendChild(q);
-				
-				var u = document.createElement("input");
-				u.type = "text";
-				u.className ="uInput";
-				u.name = "units";
-				var parent = document.getElementById("unitColumn");
-				parent.appendChild(u);
+				var ing = document.getElementById("userInput");
+				var newRow = ing.cloneNode(true);
+				var parent = document.getElementById("recipeTable");
+				parent.appendChild(newRow);
 			}
 		</script>
 {% endblock %}
