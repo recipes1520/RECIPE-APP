@@ -41,6 +41,7 @@ class ReviewPage(webapp2.RequestHandler) :
         query = ReviewSubmission.query(ancestor=get_key()).order(
                 -ReviewSubmission.date)
         user_reviews = query.fetch()
+        #unique to your template
         template_values = {
             'review_submit' : user_reviews,
         }
@@ -103,7 +104,7 @@ class SubmitPage(webapp2.RequestHandler) :
 		
 		return list
 
-	def getIngredients(self) :
+	def getInstructions(self) :
 		instructions = self.request.get_all('instructions')
 	
 		list = []
@@ -168,7 +169,7 @@ def render_template(self, template_values, path):
 	}
 	temp_values= dict(template_values.items() + default_values.items())
 
-	self.response.out.write(template.render(path, temp_values))
+	self.response.out.write(template.render(os.path.join(os.path.dirname(__file__),path), temp_values))
 
 # we use this to set up the AppEngine app - each of the mappings identifies a
 # URL and the webapp2.RequestHandler class that handles requests to that URL
