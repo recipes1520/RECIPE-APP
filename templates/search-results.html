@@ -1,42 +1,18 @@
-<html>
-<html>
-<head>
-    <meta charset="utf-8" content="html/text"/>
-    <title>{{title}}</title>
- 
-	<link href="stylesheets/style.css" rel="stylesheet"  type="text/css"/>
-    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
-</head>
-<script type="text/javascript">
-
-</script>
-<body>
-	<div class="mainContainer">   
-		<div class="navbar">
- 		{% for link in nav_bar %}
-			<div class="menuButton"><a href="{{ link.0 }}">{{link.1}}</a></div>
-		{% endfor %}
-		{% if login_btn != '' %}
-			<div class="menuButton"><a href="{{ login_btn }}">Login</a></div>
-		{% else %}
-			<div class="menuButton"><a href="{{ logout_btn }}">Logout</a></div>
-		{% endif %}   
-		</div> <!-- END NAVBAR -->
-		
-		<div class="searchInformation">
-			<br>Displaying {{recipes|length}} results for "{{search_query}}"
-		</div>
-		<div class="searchResultContainer">
-			<table class="searchResultTable">
-				{% for recipe in recipes %}
-				<tr>
-					<td class="searchResult"><a name="link" href="/recipes/{{recipe.1}}">{{recipe.0}}</a></td>
-				</tr>
-				{% endfor %}
-			</table>
-		</div>
-
+{% extends "base.html" %}
+{% block bodycontent %}
+<div class="mainContainer">   
+	<div class="searchInformation">
+		<br>Displaying {{recipes|length}} results for "{{search_query}}"
 	</div>
-</body>
-</html>
+	<div class="searchResultContainer">
+		<table class="searchResultTable">
+			{% for recipe in recipes %}
+			<tr>
+				<td class="searchResult"><a name="link" href="/recipes/{{recipe.1}}">{{recipe.0}}</a></td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+
+</div>
+{% endblock %}

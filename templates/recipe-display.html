@@ -1,28 +1,66 @@
 {% extends "base.html" %}
 {% block bodycontent %}
-
-<div>
-	{% for ing in ingredients %}
-		{{ing}}
-	{% endfor %}
-	
-				 <h2> {{ recipe.title }}</h2> 
-                  <!-- INGREDIENT LIST -->
-                    <div class="ingredientList">
-                        <h3>List of ingredients</h3>
-			 <table>
-			    <tr>
-				<td>
-				    <ul>
-						{% for ing in recipe.ingredients %}
-	
-					<li> {{ ing }}</li>
-						{% endfor %}
-				    </ul>
-				</td>
-			    </tr>
-			</table> 
-
+<div class="headerContent">
 </div>
+<!--  RECIPE AND REVIEW FORM CONTENT CONTAINER -->
+<div class="formContentContainer">
 
-{% endblock %}
+	<!-- RECIPE CONTENT CONTAINER-->
+	<div class="recipeContent">
+		<div class="headerContent">
+			<h2> {{recipe.title}} </h2>
+		</div>
+		<!-- RECIPE MAIN IMAGE -->
+		<div class="recipeMainImg">
+			<img src="img/burger.jpg" alt="Meat Mountain" height="400" width="400"/>
+			<!-- <img src= {{ recipe.image }} alt="{{ recipe.title }}" -->
+		</div>
+		<!-- INGREDIENT LIST -->
+		<div class="ingredientList">
+			<h3>List of ingredients</h3>
+			<table>
+				<tr>
+					<td>
+						<ul>
+							{% for ingredient in recipe.ingredients %}
+							<li> {{ingredient}} </li>
+							{% endfor %}
+						</ul>
+					</td>
+					<td>   
+						<table class="recipeAuthor">
+							<tr>
+								<td>Author: {{recipe.user_id}}</td>       
+							</tr>
+							<tr>
+								<td>Rating: </td>
+								<td>5</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div> <!-- END INGREDIENT LIST -->
+		<!-- TIME ESTIMATION -->
+		<div class="recipeTime">
+			<h3>Time estimation</h3>
+			<table>
+				<tr>
+					<td>Preparation:</td><td>{{recipe.time_est}}</td>
+				</tr>
+				<tr>
+					<td>Cooking:</td><td>{{recipe.time_est}}</td>
+				</tr>
+			</table>
+		</div> <!-- END TIME ESTIMATION -->
+		<!-- RECIPE DESCRIPTION -->
+		<div class="recipeDescrip">
+			<h3>Description</h3>
+			<p> {{recipe.description}} </p>
+		</div>
+		<div class="recipeInstructions">
+			<h3> Instructions </h3>
+			<p> {{recipe.instruction}} </p>
+		</div>
+	</div> <!-- END RECIPE DESCRIPTION -->
+	{% endblock %}

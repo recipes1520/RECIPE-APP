@@ -227,7 +227,6 @@ def getLogoutLink():
 app = webapp2.WSGIApplication([
   ('/', MainPage),
   ('/review', ReviewPage),
-  ('/login', LoginPage),
   ('/recipe-submit', SubmitPage),
   ('/submit_comment', CommentSection),
   ('/search', SearchHandler),
