@@ -23,12 +23,12 @@
         {% for link in nav_bar %}
         <div class="menuButton"><a href="{{ link.0 }}">{{link.1}}</a></div>
         {% endfor %}
-        {% if login_btn != '' %}
-        <div class="menuButton"><a href="{{ login_btn }}">Login</a></div>
+        {% if login_link != '' %}
+        <div class="menuButton"><a href="{{ login_link }}">Login</a></div>
         {% else %}
-        <div class="menuButton"><a href="{{ logout_btn }}">Logout</a></div>
+        <div class="menuButton"><a href="{{ logout_link }}">Logout</a></div>
         {% endif %}
-        <div class="menuButton"> {{ current_user }} </div>
+        <div class="menuButton"> {{ user }} </div>
     </div> <!-- END NAVBAR -->
     {% block bodycontent %}
     {% endblock %}

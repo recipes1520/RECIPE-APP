@@ -19,25 +19,19 @@ def get_key() :
 
 class Recipe(ndb.Model) :
 	title = ndb.StringProperty()
+	user_author = ndb.StringProperty()
 	ingredients = ndb.StringProperty(repeated=True)
-	genre = ndb.StringProperty()
 	description = ndb.TextProperty()
-	time_est = ndb.StringProperty()
-	instruction = ndb.StringProperty()
-	user_id = ndb.StringProperty()
-	
+	instructions = ndb.StringProperty(repeated=True)
+	prep_time_est = ndb.StringProperty()
+	cook_time_est = ndb.StringProperty()
+
 # This class is a request handler for the Main Page.
 class MainPage(webapp2.RequestHandler) :
  	def get(self) :
-	
-	    template_values = {
-	      'login_btn': getLoginLink(),
-	      'logout_btn': getLogoutLink(),
-		  'nav_bar' : getNavBar(),
-	      'current_user' : getCurrentUser()
-	    }
-	    path = 'templates/index.html'
-	    self.response.out.write(template.render(path, template_values))
+ 		template_values = dict()
+ 		path = 'templates/index.html'
+ 		render_template(self, template_values, path)
 
 class ReviewPage(webapp2.RequestHandler) :
     def get(self) :
@@ -49,13 +43,9 @@ class ReviewPage(webapp2.RequestHandler) :
         user_reviews = query.fetch()
         template_values = {
             'review_submit' : user_reviews,
-            'login_btn': getLoginLink(),
-            'logout_btn': getLogoutLink(),
-			'nav_bar' : getNavBar(),
-            'current_user' : getCurrentUser()
         }
-        path = os.path.join(os.path.dirname(__file__), 'templates/review-form.html')
-        self.response.out.write(template.render(path, template_values))
+        path = 'templates/review-form.html'
+        render_template(self, template_values, path)
 
 class CommentSection(webapp2.RequestHandler) :
     def post(self) :
@@ -83,31 +73,25 @@ class SubmitPage(webapp2.RequestHandler) :
   # implementing the get method here allows this class to handle GET requests.
 	def get(self) :
 
-		template_values = {
-		    'login_btn': getLoginLink(),
-		    'logout_btn': getLogoutLink(),
-		    'nav_bar' : getNavBar(),
-		    'current_user' : getCurrentUser()
-		}
+		template_values = {}
 		path = 'templates/recipe-submission.html'
-		self.response.out.write(template.render(path, template_values))
+		render_template(self, template_values, path)
 	
 	def post(self):
 		recipe = Recipe(parent=get_key())
 		
 		recipe.title = str(cgi.escape(self.request.get('recipe_title')))
-		recipe.user_id = str(users.get_current_user())		
+		recipe.user_author= str(users.get_current_user())		
 		recipe.ingredients = self.getIngredients()	
-		recipe.instruction = str(cgi.escape(self.request.get('instruction')))
+		recipe.instruction = self.getInstructions()
 		recipe.description = str(cgi.escape(self.request.get('description')))
-		recipe.time_est = str(cgi.escape(self.request.get('prep_time'))) #PREP TIME ONLY.  WILL UPDATE WITH + COOK
+		recipe.prep_time_est = str(cgi.escape(self.request.get('prep_time'))) #PREP TIME ONLY.  WILL UPDATE WITH + COOK
+		recipe.cook_time_est = str(cgi.escape(self.request.get('cook_time')))
 		recipe.genre = str(cgi.escape(self.request.get('category')))
 		recipe.put()
 		
 		self.redirect('/recipe-submit')
 		
-	
-	
 	def getIngredients(self) :
 		ingredients = self.request.get_all('ingredients')
 		quantities = self.request.get_all('quantities')
@@ -117,6 +101,14 @@ class SubmitPage(webapp2.RequestHandler) :
 		for ing in zip(ingredients, quantities, units) :
 			list.append( ing[1] + " " + ing[2] + " " + ing[0] )
 		
+		return list
+
+	def getIngredients(self) :
+		instructions = self.request.get_all('instructions')
+	
+		list = []
+		for instruction in instructions :
+			list.append(instruction)
 		return list
 
 class SearchHandler(webapp2.RequestHandler) :
@@ -132,14 +124,11 @@ class SearchHandler(webapp2.RequestHandler) :
 			recipe_titles.append((recipe.title, recipe.title.replace(" ", "_")))
 
 		template_values = {
-		  'login_btn': getLoginLink(),
-		  'logout_btn': getLogoutLink(),
-		  'nav_bar' : getNavBar(),
 		  'recipes' : recipe_titles,
 		  'search_query': search_query
 		}
 		path = 'templates/search-results.html'
-		self.response.out.write(template.render(path, template_values))
+		render_template(self, template_values, path)
 
 class RecipeDisplay(webapp2.RequestHandler) :
 	def get(self, recipe_name) :
@@ -150,39 +139,36 @@ class RecipeDisplay(webapp2.RequestHandler) :
 
 		recipe = q[0]
 		template_values = {
-		  'login_btn': getLoginLink(),
-		  'logout_btn': getLogoutLink(),
-		  'nav_bar' : getNavBar(),
 		  'recipe' : recipe
 		}
 		path = "templates/recipe-display.html"
-		self.response.out.write(template.render(path, template_values))
+		render_template(self, template_values, path)
+
 		
 def getNavBar():
 	navBarTitles = ['Home', 'Submit Recipe', 'Featured', 'About']
 	navBarLinks = ['/', 'recipe-submit', '/review', '#'];
 	return zip(navBarLinks, navBarTitles)
 
-def getCurrentUser() :
+def render_template(self, template_values, path):
 	user = users.get_current_user()
-	if not user :
-		return ''
+	login = ''
+	logout = ''
+	user_email = ''
+	if user :
+		logout = users.create_logout_url('/')
+		user_email = user.email()
 	else :
-		return user
+		login = users.create_login_url('/')
+	default_values = {
+		'login_link': login,
+		'logout_link': logout,
+		'nav_bar' : getNavBar(),
+		'user' : user_email
+	}
+	temp_values= dict(template_values.items() + default_values.items())
 
-def getLoginLink():
-	user = users.get_current_user()
-	if not user:
-		return users.create_login_url('/')
-	else:
-	  	return ''
-
-def getLogoutLink():
-	user = users.get_current_user()
-	if user:
-		return users.create_logout_url('/')
-	else:
-		return ''
+	self.response.out.write(template.render(path, temp_values))
 
 # we use this to set up the AppEngine app - each of the mappings identifies a
 # URL and the webapp2.RequestHandler class that handles requests to that URL
