@@ -60,7 +60,11 @@
 		</div>
 		<div class="recipeInstructions">
 			<h3> Instructions </h3>
-			<p> {{recipe.instruction}} </p>
+			<ul>
+				{% for instruction in recipe.instruction %}
+				<li> {{instruction}} </li>
+				{% endfor %}
+			</ul>
 		</div>
 	</div> <!-- END RECIPE DESCRIPTION -->
 	{% endblock %}
