@@ -1,16 +1,9 @@
-# import the webapp2 module so we can get access to the framework
 import cgi
 import webapp2
 import os
-import urlparse
 
-#Just seeing if I'm using git right
-
-# import the db module from appengine
 from google.appengine.ext import ndb
 from google.appengine.ext.webapp import template
-
-# import the users module from appengine
 from google.appengine.api import users
 
 # Creating datastorage for the user review submissions on review page
@@ -33,24 +26,18 @@ class Recipe(ndb.Model) :
 	instruction = ndb.StringProperty()
 	user_id = ndb.StringProperty()
 	
-# we'll create a simple Model class here.
-class PostName(ndb.Model) :
-  # this model class has just one property - myname
-  myname = ndb.StringProperty()
-
-# This class is a request handler.
+# This class is a request handler for the Main Page.
 class MainPage(webapp2.RequestHandler) :
-  # implementing the get method here allows this class to handle GET requests.
-  def get(self) :
+ 	def get(self) :
 	
-    template_values = {
-      'login_btn': getLoginLink(),
-      'logout_btn': getLogoutLink(),
-	  'nav_bar' : getNavBar(),
-      'current_user' : getCurrentUser()
-    }
-    path = 'templates/index.html'
-    self.response.out.write(template.render(path, template_values))
+	    template_values = {
+	      'login_btn': getLoginLink(),
+	      'logout_btn': getLogoutLink(),
+		  'nav_bar' : getNavBar(),
+	      'current_user' : getCurrentUser()
+	    }
+	    path = 'templates/index.html'
+	    self.response.out.write(template.render(path, template_values))
 
 class ReviewPage(webapp2.RequestHandler) :
     def get(self) :
@@ -92,31 +79,6 @@ class CommentSection(webapp2.RequestHandler) :
         comment.comment = input_comments
         comment.put()
 
-
-class LoginPage(webapp2.RequestHandler) :
-  # implementing the get method here allows this class to handle GET requests.
-  def get(self) :
-
-    user = users.get_current_user()
-
-    login = ''
-    logout = ''
-
-    if user:
-      logout = users.create_logout_url('/')
-    else:
-      login = users.create_login_url('/')
-
-    template_values = {
-      'login': login,
-      'logout': logout,
-	  'nav_bar' : getNavBar(),
-      'current_user' : getCurrentUser()
-    }
-    path = 'templates/sign-in.html'
-    self.response.out.write(template.render(path, template_values))
-
-
 class SubmitPage(webapp2.RequestHandler) :
   # implementing the get method here allows this class to handle GET requests.
 	def get(self) :
@@ -147,37 +109,37 @@ class SubmitPage(webapp2.RequestHandler) :
 	
 	
 	def getIngredients(self) :
-			ingredients = self.request.get_all('ingredients')
-			quantities = self.request.get_all('quantities')
-			units = self.request.get_all('units')
-			
-			list = []
-			for ing in zip(ingredients, quantities, units) :
-				list.append( ing[1] + " " + ing[2] + " " + ing[0] )
-			
-			return list
+		ingredients = self.request.get_all('ingredients')
+		quantities = self.request.get_all('quantities')
+		units = self.request.get_all('units')
+		
+		list = []
+		for ing in zip(ingredients, quantities, units) :
+			list.append( ing[1] + " " + ing[2] + " " + ing[0] )
+		
+		return list
 
 class SearchHandler(webapp2.RequestHandler) :
 	def post(self) :
 
-			search_query = self.request.get('searchInput')
-			query = Recipe.query(ancestor=get_key()).order(
-					-Recipe.title)
-			recipes = query.fetch()
+		search_query = self.request.get('searchInput')
+		query = Recipe.query(ancestor=get_key()).order(
+				-Recipe.title)
+		recipes = query.fetch()
 
-			recipe_titles = []
-			for recipe in recipes :
-				recipe_titles.append((recipe.title, recipe.title.replace(" ", "_")))
+		recipe_titles = []
+		for recipe in recipes :
+			recipe_titles.append((recipe.title, recipe.title.replace(" ", "_")))
 
-			template_values = {
-			  'login_btn': getLoginLink(),
-			  'logout_btn': getLogoutLink(),
-			  'nav_bar' : getNavBar(),
-			  'recipes' : recipe_titles,
-			  'search_query': search_query
-			}
-			path = 'templates/search-results.html'
-			self.response.out.write(template.render(path, template_values))
+		template_values = {
+		  'login_btn': getLoginLink(),
+		  'logout_btn': getLogoutLink(),
+		  'nav_bar' : getNavBar(),
+		  'recipes' : recipe_titles,
+		  'search_query': search_query
+		}
+		path = 'templates/search-results.html'
+		self.response.out.write(template.render(path, template_values))
 
 class RecipeDisplay(webapp2.RequestHandler) :
 	def get(self, recipe_name) :
@@ -209,18 +171,18 @@ def getCurrentUser() :
 		return user
 
 def getLoginLink():
-  user = users.get_current_user()
-  if not user:
-    return users.create_login_url('/')
-  else:
-    return ''
+	user = users.get_current_user()
+	if not user:
+		return users.create_login_url('/')
+	else:
+	  	return ''
 
 def getLogoutLink():
-  user = users.get_current_user()
-  if user:
-    return users.create_logout_url('/')
-  else:
-    return ''
+	user = users.get_current_user()
+	if user:
+		return users.create_logout_url('/')
+	else:
+		return ''
 
 # we use this to set up the AppEngine app - each of the mappings identifies a
 # URL and the webapp2.RequestHandler class that handles requests to that URL

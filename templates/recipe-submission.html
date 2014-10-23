@@ -1,79 +1,79 @@
 {% extends "base.html" %}
 {% block bodycontent %}
-			<div class="submissionCard"><!--start of virtual recipe card-->
-			        <div class="headerContent">
-				    <h2> Recipe Submission</h2>
-				</div>
-				<form method="post">
-					<h3>Recipe name</h3>
-					<div id="recipeTitle">
-					    <input type="text" placeholder="Recipe Name" name="recipe_title">
-					</div>
-					<div class="addIngredContainer">
-					    <h3>Ingredients and description</h3>
-                        <table id="recipeTable">
-                            <tr id="tableLabels">
-                                <td>Ingredients</td>
-                                <td>Quantity</td>
-                                <td>Units</td>
-                            </tr>
-                            <tr id="userInput" class="ingInput">
-                                <td><input type="text" class="ingInput" placeholder="ingredient" name="ingredients"></td>
-                                <td><input type="text" class="qInput" placeholder="quantity" name="quantities"></td>
-                                <td><input type="text" class="uInput" placeholder="units e.g. tsp, tbsp, cups..." name="units"></td>
-                            </tr>
-                        </table>
-					    <div id="addIngredient" onclick="addIngredient();">
-						    <p>Add Ingredient</p>
-					    </div>
-					</div>
-					
-					<div id="description">
-					    <!-- <h3>Description</h3> -->
-					    <textarea rows="4" cols="50" placeholder="Description" name="description"></textarea>
-					</div>
-					<div id="instructions">
-					    <textarea rows="4" cols="50" placeholder="Instructions" name="instruction"></textarea>
-					</div>
-					<table>
-					    <h3>Time estimation</h3>
-					    <tr>
-						<td><input type="text" placeholder="Preparation time" name="prep_time"></td>
-					    </tr>
-					    <tr>
-						<td><input type="text" placeholder="Cooking time" name="cook_time"></td>
-					    </tr>
-						<tr>
-						<td><h3>Category</h3></td>
-						<td>
-							<select>
-							<option value="quick">Quick Bites</option>
-							<option value="hearty">Hearty Meal</option>
-							<option value="crock">Crock Pot</option>
-							<option value="dessert">Dessert</option>
-							<option value="drink">Drink</option>
-							<option value="grandma">Grandma's Secret Recipe</option>
-							</select>
-						</td>
-					    </tr>
-					</table>
-					<div id="image_upload">
-					    <h3>Photo upload</h3>
-					    <input type="file" name="img"/>
-					</div>
-					<div class="button">
-					    <input type="submit" value="submit">
-					</div>
-				</form>
-			</div><!--end of virtual recipe card-->
-		</div><!--end of main container-->
-		<!--script to add ingredients-->
-		<script type = "text/javascript">
-			function addIngredient(){
-				var ing = document.getElementById("userInput");
-				var newRow = ing.cloneNode(true);
-				var parent = document.getElementById("recipeTable");
-				parent.appendChild(newRow);
-			}
-		</script>
+<div class="submissionCard"><!--start of virtual recipe card-->
+	<div class="headerContent">
+		<h2> Recipe Submission</h2>
+	</div>
+	<form method="post">
+		<h3>Recipe name</h3>
+		<div id="recipeTitle">
+			<input type="text" placeholder="Recipe Name" name="recipe_title">
+		</div>
+		<div class="addIngredContainer">
+			<h3>Ingredients and description</h3>
+			<table id="recipeTable">
+				<tr id="tableLabels">
+					<td>Ingredients</td>
+					<td>Quantity</td>
+					<td>Units</td>
+				</tr>
+				<tr id="userInput" class="ingInput">
+					<td><input type="text" class="ingInput" placeholder="ingredient" name="ingredients"></td>
+					<td><input type="text" class="qInput" placeholder="quantity" name="quantities"></td>
+					<td><input type="text" class="uInput" placeholder="units e.g. tsp, tbsp, cups..." name="units"></td>
+				</tr>
+			</table>
+			<div id="addIngredient" onclick="addIngredient();">
+				<p>Add Ingredient</p>
+			</div>
+		</div>
+		
+		<div id="description">
+			<!-- <h3>Description</h3> -->
+			<textarea rows="4" cols="50" placeholder="Description" name="description"></textarea>
+		</div>
+		<div id="instructions">
+			<textarea rows="4" cols="50" placeholder="Instructions" name="instruction"></textarea>
+		</div>
+		<table>
+			<h3>Time estimation</h3>
+			<tr>
+				<td><input type="text" placeholder="Preparation time" name="prep_time"></td>
+			</tr>
+			<tr>
+				<td><input type="text" placeholder="Cooking time" name="cook_time"></td>
+			</tr>
+			<tr>
+				<td><h3>Category</h3></td>
+				<td>
+					<select>
+						<option value="quick">Quick Bites</option>
+						<option value="hearty">Hearty Meal</option>
+						<option value="crock">Crock Pot</option>
+						<option value="dessert">Dessert</option>
+						<option value="drink">Drink</option>
+						<option value="grandma">Grandma's Secret Recipe</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+		<div id="image_upload">
+			<h3>Photo upload</h3>
+			<input type="file" name="img"/>
+		</div>
+		<div class="button">
+			<input type="submit" value="submit">
+		</div>
+	</form>
+</div><!--end of virtual recipe card-->
+</div><!--end of main container-->
+<!--script to add ingredients-->
+<script type = "text/javascript">
+	function addIngredient(){
+		var ing = document.getElementById("userInput");
+		var newRow = ing.cloneNode(true);
+		var parent = document.getElementById("recipeTable");
+		parent.appendChild(newRow);
+	}
+</script>
 {% endblock %}
