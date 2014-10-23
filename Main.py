@@ -180,13 +180,13 @@ class SearchHandler(webapp2.RequestHandler) :
 			self.response.out.write(template.render(path, template_values))
 
 class RecipeDisplay(webapp2.RequestHandler) :
-	def get(self) :
+	def get(self, recipe_name) :
 		
-		query = Recipe.query(Recipe.title == "Big Taco")
+		recipe_name = recipe_name.replace("_"," ")
+		query = Recipe.query(Recipe.title == recipe_name)
 		q = query.fetch()
 
 		recipe = q[0]
-
 		template_values = {
 		  'login_btn': getLoginLink(),
 		  'logout_btn': getLogoutLink(),
@@ -195,7 +195,6 @@ class RecipeDisplay(webapp2.RequestHandler) :
 		}
 		path = "templates/recipe-display.html"
 		self.response.out.write(template.render(path, template_values))
-		
 		
 def getNavBar():
 	navBarTitles = ['Home', 'Submit Recipe', 'Featured', 'About']
@@ -232,6 +231,5 @@ app = webapp2.WSGIApplication([
   ('/recipe-submit', SubmitPage),
   ('/submit_comment', CommentSection),
   ('/search', SearchHandler),
-  ('/recipe-display/.*', RecipeDisplay),
-  ('/recipes/.*', RecipeDisplay),
+  ('/recipes/(.*)', RecipeDisplay),
 ], debug=True)

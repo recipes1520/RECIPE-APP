@@ -8,6 +8,9 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
 </head>
+<script type="text/javascript">
+
+</script>
 <body>
 	<div class="mainContainer">   
 		<div class="navbar">
@@ -28,11 +31,12 @@
 			<table class="searchResultTable">
 				{% for recipe in recipes %}
 				<tr>
-					<td class="searchResult"><a href="/recipes/{{recipe.1}}">{{recipe.0}}</a></td>
+					<td class="searchResult"><a name="link" href="/recipes/{{recipe.1}}">{{recipe.0}}</a></td>
 				</tr>
 				{% endfor %}
 			</table>
 		</div>
+
 	</div>
 </body>
 </html>
