@@ -32,11 +32,17 @@
 			<!-- <h3>Description</h3> -->
 			<textarea rows="4" cols="50" placeholder="Description" name="description"></textarea>
 		</div>
-		<div id="instructions">
-			<textarea rows="4" cols="50" placeholder="Instructions" name="instruction"></textarea>
+		<table id="instructionTable">
+            <tr id="instructionInput" class="instRow">
+                <td><input type="text" class="instInput" placeholder="Instruction Step" name="instructions"></td>
+            </tr>
+		</table>
+        <div id="addInstruction" onclick="addInstruction();">
+				<p>Add A New Step</p>
 		</div>
+        <br><br><br><br>
 		<table>
-			<h3>Time estimation</h3>
+			<tr><h3>Time estimation</h3></tr>
 			<tr>
 				<td><input type="text" placeholder="Preparation time" name="prep_time"></td>
 			</tr>
@@ -56,6 +62,12 @@
 </div><!--end of main container-->
 <!--script to add ingredients-->
 <script type = "text/javascript">
+    function addInstruction(){
+        var table = document.getElementById('instructionTable');
+		var row = table.insertRow(-1);
+		var cell1 = row.insertCell(0);
+		cell1.innerHTML = '<input type="text" class="instInput" placeholder="Instruction Step" name="instruction">';
+    }
 	function addIngredient(){
 		var table = document.getElementById('recipeTable');
 		var row = table.insertRow(-1);
@@ -65,8 +77,6 @@
 		cell1.innerHTML = '<input type="text" class="ingInput" placeholder="ingredient" name="ingredients">';
 		cell2.innerHTML = '<input type="text" class="qInput" placeholder="quantity" name="quantities">';
 		cell3.innerHTML = '<input type="text" class="uInput" placeholder="units e.g. tsp, tbsp, cups..." name="units">';
-		var parent = document.getElementById("recipeTable");
-		parent.appendChild(newRow);
 	}
 </script>
 {% endblock %}

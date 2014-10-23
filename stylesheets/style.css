@@ -310,5 +310,26 @@ the recipe submission version of formContent*/
     box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.24);
 }
 
+#addInstruction {
+    width: 15em;
+    text-align: center;
+    margin: 0 auto;
+    outline: none !important;
+    color: white;
+    border: none;
+    background-color: #586CDE !important;
+   /* border-radius: 5px; /* Added this*/
+    clear: both;
+    /* float: right; */
+    float: left;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#addInstruction:hover {
+    background-color: #4456B0 !important;
+    box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.24);
+}
+
 /*END SUBMISSION SPECIFIC STUFF*/
 
