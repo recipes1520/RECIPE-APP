@@ -1,28 +1,53 @@
+/* CUSTOMIZE THE NAVBAR
+-------------------------------------------------- */
 
+/* Special class on .container surrounding .navbar, used for positioning it into place. */
+.navbar-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 20;
+}
+
+/* Flip around the padding for proper display in narrow viewports */
+.navbar-wrapper > .container {
+  padding-right: 0;
+  padding-left: 0;
+}
+.navbar-wrapper .navbar {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.navbar-wrapper .navbar .container {
+  width: auto;
+}
 
 .logoContainer{
     margin: 0 auto;
     margin-top: 5em;
+    margin-bottom: 5em;
     padding: 1em;
     width: 25em;
-    height: 5em;
+    height: 7em;
 }
 
 .searchForm{
-	margin: 0 auto;
-	padding: 1em;
-    width: 25em;
+    margin: 0 auto;
+    padding: 1em;
+    width: 40em;
     height: 5em;
 }
 
+
 .searchBar{
-	height: 2em;
-	width: 27em;
-	padding-left: 5px;
+    height: 2em;
+    width: 37em;
+    padding-left: 5px;
 }
 
 .searchResultContainer{
-	margin: 0 auto;
+    margin: 0 auto;
     margin-top: 2em;
     padding-top: 2px;
     padding-bottom: 3em;
@@ -37,30 +62,31 @@
 .searchResultTable{
     margin-left:auto; 
     margin-right:auto;
-	text-align: left;
-	width: 100%;
+    text-align: left;
+    width: 100%;
 
 }
 
 .searchResult{
-	font-size: 24pt;
-	padding-top: .5em;
-	padding-bottom: .5em;
-	padding-left: .5em;
-	border-bottom: 1pt solid black; ;
+    font-size: 24pt;
+    padding-top: .5em;
+    padding-bottom: .5em;
+    padding-left: .5em;
+    border-bottom: 1pt solid black; 
 	
 }
 
 .searchInformation{
-	text-align: center;
-	color: red;
+    text-align: center;
+    color: red;
 }
 	
 
 body{
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif !important;
     color: #343538; 
     background-color: #F0F2F2;
+    padding-top: 70px;
 }
 
 .mainContainer {
@@ -90,16 +116,13 @@ a {
 
 
 .navbar {
-    padding-top: 1em;
-    padding-bottom: 1em;
-    padding-right: 1em;
-    margin: 0 auto;
-    float: none;
-    width: 90%;
-    min-width: 40em;
-    height: auto;
-    text-align: left;
     background-color: #F0F2F2;
+    border-color: transparent !important;
+    border-radius: 0px !important; 
+}
+
+.nav li > a:hover {
+    color: #586CDE !important;
 }
 
 .menuButton {
@@ -265,6 +288,13 @@ the recipe submission version of formContent*/
     background-color: #fff;
     box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.24);
    /* border-radius: 10px;        /* Added */
+}
+
+.indexButtonGroup{
+    margin: 0 auto;
+    padding-left: 7em;
+    width: 100%;
+    height: auto;
 }
 
 .button {
