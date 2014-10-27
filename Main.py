@@ -84,9 +84,9 @@ class SubmitPage(webapp2.RequestHandler) :
 
 class UploadRecipe(blobstore_handlers.BlobstoreUploadHandler):
 	def post(self):
-		pic = self.get_uploads('image')
+		pic = self.get_uploads('file')
 		recipe = Recipe(parent=get_key())
-		#recipe.image = pic
+		recipe.image = pic[0].key()
 		recipe.title = str(cgi.escape(self.request.get('recipe_title')))
 		recipe.user_author= str(users.get_current_user())
 		recipe.ingredients = self.getIngredients()

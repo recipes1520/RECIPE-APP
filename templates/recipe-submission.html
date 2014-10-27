@@ -7,7 +7,7 @@
 	<div class="headerContent">
 		<h2> Recipe Submission</h2>
 	</div>
-	<form action="{{uploadURL}}" method="POST">
+	<form action="{{uploadURL}}" method="POST" enctype="multipart/form-data">
 		<h3>Recipe name</h3>
 		<div id="recipeTitle">
 			<input type="text" placeholder="Recipe Name" name="recipe_title">
@@ -55,7 +55,7 @@
 		</table>
 		<div id="image_upload">
 			<h3>Photo upload</h3>
-			<input type="file" name="image"/>
+			<input type="file" name="file"/>
 		</div>
 		<div class="button">
 			<input type="submit" value="Submit">
