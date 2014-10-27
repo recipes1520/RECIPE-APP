@@ -125,7 +125,11 @@ a {
     color: #586CDE !important;
 }
 
-.menuButton {
+.navbar-brand:hover {
+    color: #586CDE !important;
+}
+
+/*.menuButton {
     display: inline;
     width: 5em;
     height: 5em;
@@ -141,6 +145,11 @@ a {
     padding-top: 1em;
     padding-bottom: 1em;
     text-align: center;
+}
+*/
+
+.badge {
+    background-color: #586CDE !important;
 }
 
 .formContentContainer {

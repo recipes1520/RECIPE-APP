@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% block titlecontent %}
+<title>{{recipe.title}} - CookUp</title>
+{% endblock %}
 {% block bodycontent %}
 <div class="headerContent">
 </div>
@@ -12,13 +15,13 @@
 		</div>
 		<!-- RECIPE MAIN IMAGE -->
 		<div class="recipeMainImg">
-			<img src="img/burger.jpg" alt="Meat Mountain" height="400" width="400"/>
+			<img src="img/burger.jpg" alt="{{recipe.title}}" height="400" width="400"/>
 			<!-- <img src= {{ recipe.image }} alt="{{ recipe.title }}" -->
 		</div>
 		<!-- INGREDIENT LIST -->
 		<div class="ingredientList">
 			<h3>List of ingredients</h3>
-			<table>
+			<!-- <table>
 				<tr>
 					<td>
 						<ul>
@@ -39,7 +42,16 @@
 						</table>
 					</td>
 				</tr>
-			</table>
+			</table> -->
+                <ul class="list-group">
+                {% for ingredient in recipe.ingredients %}
+                  <li class="list-group-item">
+                    <span class="badge"> QUANTITY </span>
+                    {{ingredient}}
+                  </li>
+                  {% endfor %}
+                </ul>
+
 		</div> <!-- END INGREDIENT LIST -->
 		<!-- TIME ESTIMATION -->
 		<div class="recipeTime">

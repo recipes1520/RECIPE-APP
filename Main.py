@@ -5,6 +5,7 @@ import os
 from google.appengine.ext import ndb
 from google.appengine.ext.webapp import template
 from google.appengine.api import users
+from google.appengine.ext import blobstore
 
 # Creating datastorage for the user review submissions on review page
 class ReviewSubmission(ndb.Model) :
@@ -18,13 +19,14 @@ def get_key() :
     return ndb.Key('recipe_name', 'author')
 
 class Recipe(ndb.Model) :
-	title = ndb.StringProperty()
-	user_author = ndb.StringProperty()
-	ingredients = ndb.StringProperty(repeated=True)
-	description = ndb.TextProperty()
-	instructions = ndb.StringProperty(repeated=True)
-	prep_time_est = ndb.StringProperty()
-	cook_time_est = ndb.StringProperty()
+    title = ndb.StringProperty()
+    user_author = ndb.StringProperty()
+    ingredients = ndb.StringProperty(repeated=True)
+    description = ndb.TextProperty()
+    instructions = ndb.StringProperty(repeated=True)
+    prep_time_est = ndb.StringProperty()
+    cook_time_est = ndb.StringProperty()
+    image = ndb.BlobProperty(default=None)
 
 # This class is a request handler for the Main Page.
 class MainPage(webapp2.RequestHandler) :
@@ -77,36 +79,36 @@ class SubmitPage(webapp2.RequestHandler) :
 		template_values = {}
 		path = 'templates/recipe-submission.html'
 		render_template(self, template_values, path)
-	
+
 	def post(self):
 		recipe = Recipe(parent=get_key())
-		
 		recipe.title = str(cgi.escape(self.request.get('recipe_title')))
-		recipe.user_author= str(users.get_current_user())		
-		recipe.ingredients = self.getIngredients()	
+		recipe.user_author= str(users.get_current_user())
+		recipe.ingredients = self.getIngredients()
 		recipe.instruction = self.getInstructions()
 		recipe.description = str(cgi.escape(self.request.get('description')))
 		recipe.prep_time_est = str(cgi.escape(self.request.get('prep_time'))) #PREP TIME ONLY.  WILL UPDATE WITH + COOK
 		recipe.cook_time_est = str(cgi.escape(self.request.get('cook_time')))
 		recipe.genre = str(cgi.escape(self.request.get('category')))
+        #upload_url = blobstore.create_upload_url('/upload')
 		recipe.put()
-		
+
 		self.redirect('/recipe-submit')
-		
+
 	def getIngredients(self) :
 		ingredients = self.request.get_all('ingredients')
 		quantities = self.request.get_all('quantities')
 		units = self.request.get_all('units')
-		
+
 		list = []
 		for ing in zip(ingredients, quantities, units) :
 			list.append( ing[1] + " " + ing[2] + " " + ing[0] )
-		
+
 		return list
 
 	def getInstructions(self) :
 		instructions = self.request.get_all('instructions')
-	
+
 		list = []
 		for instruction in instructions :
 			list.append(instruction)
@@ -133,7 +135,7 @@ class SearchHandler(webapp2.RequestHandler) :
 
 class RecipeDisplay(webapp2.RequestHandler) :
 	def get(self, recipe_name) :
-		
+
 		recipe_name = recipe_name.replace("_"," ")
 		query = Recipe.query(Recipe.title == recipe_name)
 		q = query.fetch()
@@ -145,10 +147,10 @@ class RecipeDisplay(webapp2.RequestHandler) :
 		path = "templates/recipe-display.html"
 		render_template(self, template_values, path)
 
-		
+
 def getNavBar():
-	navBarTitles = ['Home', 'Submit Recipe', 'Featured', 'About']
-	navBarLinks = ['/', 'recipe-submit', '/review', '#']
+	navBarTitles = ['Submit Recipe', 'Featured', 'About']
+	navBarLinks = ['recipe-submit', '/review', '#']
 	return zip(navBarLinks, navBarTitles)
 
 def render_template(self, template_values, path):

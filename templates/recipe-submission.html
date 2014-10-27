@@ -1,10 +1,13 @@
 {% extends "base.html" %}
+{% block titlecontent %}
+<title>Submit Recipe - CookUp</title>
+{% endblock %}
 {% block bodycontent %}
 <div class="submissionCard"><!--start of virtual recipe card-->
 	<div class="headerContent">
 		<h2> Recipe Submission</h2>
 	</div>
-	<form method="post">
+	<form method="POST">
 		<h3>Recipe name</h3>
 		<div id="recipeTitle">
 			<input type="text" placeholder="Recipe Name" name="recipe_title">
@@ -52,7 +55,7 @@
 		</table>
 		<div id="image_upload">
 			<h3>Photo upload</h3>
-			<input type="file" name="img"/>
+			<input type="file" name="image"/>
 		</div>
 		<div class="button">
 			<input type="submit" value="Submit">
