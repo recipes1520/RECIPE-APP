@@ -86,7 +86,7 @@ class UploadRecipe(blobstore_handlers.BlobstoreUploadHandler):
 	def post(self):
 		pic = self.get_uploads('image')
 		recipe = Recipe(parent=get_key())
-		recipe.image = pic[0]
+		#recipe.image = pic
 		recipe.title = str(cgi.escape(self.request.get('recipe_title')))
 		recipe.user_author= str(users.get_current_user())
 		recipe.ingredients = self.getIngredients()
