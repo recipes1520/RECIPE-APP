@@ -8,6 +8,7 @@ from google.appengine.ext.webapp import template
 from google.appengine.api import users
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
+from google.appengine.api import images
 
 # Creating datastorage for the user review submissions on review page
 class ReviewSubmission(ndb.Model) :
@@ -145,8 +146,10 @@ class RecipeDisplay(webapp2.RequestHandler) :
 		q = query.fetch()
 
 		recipe = q[0]
+		imgURL = images.get_serving_url(recipe.image, size=None, crop=False, secure_url=True)
 		template_values = {
-		  'recipe' : recipe
+		  'recipe' : recipe,
+		  'imgURL' : imgURL
 		}
 		path = "templates/recipe-display.html"
 		render_template(self, template_values, path)
