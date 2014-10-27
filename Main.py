@@ -150,7 +150,7 @@ class RecipeDisplay(webapp2.RequestHandler) :
 
 def getNavBar():
 	navBarTitles = ['Submit Recipe', 'Featured', 'About']
-	navBarLinks = ['recipe-submit', '/review', '#']
+	navBarLinks = ['/recipe-submit', '/review', '#']
 	return zip(navBarLinks, navBarTitles)
 
 def render_template(self, template_values, path):
