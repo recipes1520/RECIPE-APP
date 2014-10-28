@@ -87,7 +87,10 @@ class UploadRecipe(blobstore_handlers.BlobstoreUploadHandler):
 	def post(self):
 		pic = self.get_uploads('file')
 		recipe = Recipe(parent=get_key())
-		recipe.image = pic[0].key()
+		if len(pic) == 0 :
+			recipe.image = None
+		else :
+			recipe.image = pic[0].key()
 		recipe.title = str(cgi.escape(self.request.get('recipe_title')))
 		recipe.user_author= str(users.get_current_user())
 		recipe.ingredients = self.getIngredients()
@@ -146,7 +149,11 @@ class RecipeDisplay(webapp2.RequestHandler) :
 		q = query.fetch()
 
 		recipe = q[0]
-		imgURL = images.get_serving_url(recipe.image, size=None, crop=False, secure_url=True)
+		#will load a default image if none provided.
+		if recipe.image == None :
+			imgURL = '../img/defaultImage.jpg'
+		else :
+			imgURL = images.get_serving_url(recipe.image, size=None, crop=False, secure_url=True)
 		template_values = {
 		  'recipe' : recipe,
 		  'imgURL' : imgURL
