@@ -151,9 +151,12 @@ class SearchHandler(webapp2.RequestHandler) :
 			else :
 				image_urls.append(images.get_serving_url(recipe.image, size=None, crop=False, secure_url=True))
 
+		zipped = zip(recipe_titles, image_urls)
+
 		template_values = {
 		  'recipes' : recipe_titles,
 		  'image_urls' : image_urls,
+          'zipped' : zipped,
 		  'search_query': search_query
 		}
 		path = 'templates/search-results.html'

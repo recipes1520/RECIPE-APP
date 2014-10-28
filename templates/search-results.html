@@ -9,9 +9,9 @@
 	</div>
 	<div class="searchResultContainer">
 		<table class="searchResultTable">
-			{% for recipe in recipes %}
+			{% for recipe, image_urls in zipped %}
 			<tr>
-				<td><img src="{{image_urls.}}" height="40" width="40"/></td>
+				<td><img src="{{image_urls}}" height="40" width="40"/></td>
                 <td class="searchResult"><a name="link" href="/recipes/{{recipe.1}}">{{recipe.0}}</a></td>
 			</tr>
 			{% endfor %}
