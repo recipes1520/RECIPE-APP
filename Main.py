@@ -30,6 +30,8 @@ class Recipe(ndb.Model) :
 	instructions = ndb.StringProperty(repeated=True)
 	prep_time_est = ndb.StringProperty()
 	cook_time_est = ndb.StringProperty()
+	total_rating_points = ndb.IntegerProperty(default=0)
+	avg_rating = ndb.FloatProperty(default=0)
 	image = ndb.BlobKeyProperty()
 	comment_section = ndb.StructuredProperty(ReviewSubmission, repeated=True)
 
@@ -77,7 +79,9 @@ class CommentSection(webapp2.RequestHandler) :
 		comment.comment = input_comments
 		query = Recipe.query(Recipe.title == input_recipe )
 		recipe = query.fetch()[0]
+		recipe.total_rating_points += input_rating
 		recipe.comment_section.append(comment)
+		recipe.avg_rating = float(recipe.total_rating_points)/len(recipe.comment_section)
 		recipe.put()
 		comment.put()
 
@@ -163,6 +167,7 @@ class RecipeDisplay(webapp2.RequestHandler) :
 		q = query.fetch()
 
 		recipe = q[0]
+
 		#will load a default image if none provided.
 		if recipe.image == None :
 			imgURL = '../img/defaultImage.jpg'
