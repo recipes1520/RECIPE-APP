@@ -10,7 +10,7 @@
 	<form action="{{uploadURL}}" method="POST" enctype="multipart/form-data">
 		<h3>Recipe name</h3>
 		<div id="recipeTitle">
-			<input type="text" placeholder="Recipe Name" name="recipe_title">
+			<input type="text" placeholder="Recipe Name" name="recipe_title" required=TRUE>
 		</div>
 		<div class="addIngredContainer">
 			<h3>Ingredients and description</h3>
@@ -33,7 +33,7 @@
 		
 		<div id="description">
 			<!-- <h3>Description</h3> -->
-			<textarea rows="4" cols="50" placeholder="Description" name="description"></textarea>
+			<textarea rows="4" cols="50" placeholder="Description" name="description" required=TRUE></textarea>
 		</div>
 		<table id="instructionTable">
             <tr id="instructionInput" class="instRow">
@@ -47,10 +47,10 @@
 		<table>
 			<tr><h3>Time estimation</h3></tr>
 			<tr>
-				<td><input type="text" placeholder="Preparation time" name="prep_time"></td>
+				<td><input type="text" placeholder="Preparation time" name="prep_time" required=TRUE></td>
 			</tr>
 			<tr>
-				<td><input type="text" placeholder="Cooking time" name="cook_time"></td>
+				<td><input type="text" placeholder="Cooking time" name="cook_time" required=TRUE></td>
 			</tr>
 		</table>
 		<div id="image_upload">
