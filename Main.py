@@ -9,6 +9,7 @@ from google.appengine.api import users
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.api import images
+from google.appengine.api import search
 
 # Creating datastorage for the user review submissions on review page
 class ReviewSubmission(ndb.Model) :
@@ -91,12 +92,14 @@ class SubmitPage(webapp2.RequestHandler) :
 
 class UploadRecipe(blobstore_handlers.BlobstoreUploadHandler):
 	def post(self):
+		#this is for image storing
 		pic = self.get_uploads('file')
 		recipe = Recipe(parent=get_key())
 		if len(pic) == 0 :
 			recipe.image = None
 		else :
 			recipe.image = pic[0].key()
+		#all this is for ndb store of recipe text
 		recipe.title = str(cgi.escape(self.request.get('recipe_title')))
 		recipe.user_author= str(users.get_current_user())
 		recipe.ingredients = self.getIngredients()
@@ -136,11 +139,17 @@ class SearchHandler(webapp2.RequestHandler) :
 		recipes = query.fetch()
 
 		recipe_titles = []
+		image_urls = []
 		for recipe in recipes :
 			recipe_titles.append((recipe.title, recipe.title.replace(" ", "_")))
+			if recipe.image == None :
+				image_urls.append('../img/defaultImage.jpg')
+			else :
+				image_urls.append(images.get_serving_url(recipe.image, size=None, crop=False, secure_url=True))
 
 		template_values = {
 		  'recipes' : recipe_titles,
+		  'image_urls' : image_urls,
 		  'search_query': search_query
 		}
 		path = 'templates/search-results.html'
