@@ -73,10 +73,10 @@
 			<h3>Time estimation</h3>
 			<table>
 				<tr>
-					<td>Preparation:</td><td>{{recipe.time_est}}</td>
+					<td>Preparation:</td><td>{{recipe.cook_time_est}}</td>
 				</tr>
 				<tr>
-					<td>Cooking:</td><td>{{recipe.time_est}}</td>
+					<td>Cooking:</td><td>{{recipe.prep_time_est}}</td>
 				</tr>
 			</table>
 		</div> <!-- END TIME ESTIMATION -->
@@ -88,7 +88,7 @@
 		<div class="recipeInstructions">
 			<h3> Instructions </h3>
 			<ul>
-				{% for instruction in recipe.instruction %}
+				{% for instruction in recipe.instructions %}
 				<li> {{instruction}} </li>
 				{% endfor %}
 			</ul>

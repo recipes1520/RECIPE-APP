@@ -95,11 +95,10 @@ class UploadRecipe(blobstore_handlers.BlobstoreUploadHandler):
 		recipe.title = str(cgi.escape(self.request.get('recipe_title')))
 		recipe.user_author= str(users.get_current_user())
 		recipe.ingredients = self.getIngredients()
-		recipe.instruction = self.getInstructions()
+		recipe.instructions = self.getInstructions()
 		recipe.description = str(cgi.escape(self.request.get('description')))
 		recipe.prep_time_est = str(cgi.escape(self.request.get('prep_time'))) #PREP TIME ONLY.  WILL UPDATE WITH + COOK
 		recipe.cook_time_est = str(cgi.escape(self.request.get('cook_time')))
-		recipe.genre = str(cgi.escape(self.request.get('category')))
 		recipe.put()
 
 		self.redirect('/recipe-submit')
