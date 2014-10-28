@@ -30,7 +30,7 @@ class Recipe(ndb.Model) :
 	prep_time_est = ndb.StringProperty()
 	cook_time_est = ndb.StringProperty()
 	image = ndb.BlobKeyProperty()
-	#comment_section = ndb.StructuredProperty(ReviewSubmission, repeated=true)
+	comment_section = ndb.StructuredProperty(ReviewSubmission, repeated=True)
 
 # This class is a request handler for the Main Page.
 class MainPage(webapp2.RequestHandler) :
@@ -57,24 +57,29 @@ class ReviewPage(webapp2.RequestHandler) :
 class CommentSection(webapp2.RequestHandler) :
 	def post(self) :
 		try :
-			input_recipe = str(cgi.escape(self.request.get('recipe')))
+			input_recipe = str(cgi.escape(self.request.get('recipeTitle')))
 			input_author = str(users.get_current_user())
 			input_rating = int(cgi.escape(self.request.get('rating')))
 			input_comments = str(cgi.escape(self.request.get('comments')))
 			self.store_comment(input_recipe, input_author, input_rating,
 						   input_comments)
-			self.redirect('/review')
+			self.redirect("/recipes/" + input_recipe.replace(' ', '_'))
 		except(TypeError, ValueError):
 			self.response.out.write('<html><body>Invalid input</html></body')
 
 	def store_comment(self, input_recipe, input_author, input_rating,
 					  input_comments) :
 		comment = ReviewSubmission(parent=get_key())
-		comment.recipe_name = input_recipe
+		comment.recipe_name = "Pickles"
 		comment.author = input_author
 		comment.rating = input_rating
 		comment.comment = input_comments
+		query = Recipe.query(Recipe.title == input_recipe )
+		recipe = query.fetch()[0]
+		recipe.comment_section.append(comment)
+		recipe.put()
 		comment.put()
+
 
 class SubmitPage(webapp2.RequestHandler) :
 	# implementing the get method here allows this class to handle GET requests.
@@ -156,7 +161,8 @@ class RecipeDisplay(webapp2.RequestHandler) :
 			imgURL = images.get_serving_url(recipe.image, size=None, crop=False, secure_url=True)
 		template_values = {
 		  'recipe' : recipe,
-		  'imgURL' : imgURL
+		  'imgURL' : imgURL,
+		  'reviews' : recipe.comment_section
 		}
 		path = "templates/recipe-display.html"
 		render_template(self, template_values, path)
