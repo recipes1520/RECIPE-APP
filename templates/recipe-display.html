@@ -3,6 +3,19 @@
 <title>{{recipe.title}} - CookUp</title>
 {% endblock %}
 {% block bodycontent %}
+<script type="text/javascript">
+	
+	function getIng( ing ){
+		var splitted = String(ing).split("_");
+		var ingredient = splitted[1];
+		document.write(String(ingredient));
+	}
+	function getUnits( ing ){
+		var splitted = String(ing).split("_");
+		var quant_and_units = splitted[0];
+		document.write(String(quant_and_units));
+	}
+</script>
 <div class="headerContent">
 </div>
 <!--  RECIPE AND REVIEW FORM CONTENT CONTAINER -->
@@ -45,9 +58,11 @@
 			</table> -->
                 <ul class="list-group">
                 {% for ingredient in recipe.ingredients %}
-                  <li class="list-group-item">
-                    <span class="badge"> QUANTITY </span>
-                    {{ingredient}}
+                  <li class="list-group-item" >
+                    <span id="quantity" class="badge">
+                   	 <script>getUnits("{{ingredient}}")</script>
+                    </span>
+                 	<script>getIng("{{ingredient}}")</script>
                   </li>
                   {% endfor %}
                 </ul>

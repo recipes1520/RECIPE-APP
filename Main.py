@@ -30,6 +30,7 @@ class Recipe(ndb.Model) :
 	prep_time_est = ndb.StringProperty()
 	cook_time_est = ndb.StringProperty()
 	image = ndb.BlobKeyProperty()
+	#comment_section = ndb.StructuredProperty(ReviewSubmission, repeated=true)
 
 # This class is a request handler for the Main Page.
 class MainPage(webapp2.RequestHandler) :
@@ -110,7 +111,7 @@ class UploadRecipe(blobstore_handlers.BlobstoreUploadHandler):
 
 		list = []
 		for ing in zip(ingredients, quantities, units) :
-			list.append( ing[1] + " " + ing[2] + " " + ing[0] )
+			list.append( ing[1] + " " + ing[2] + "_" + ing[0] )
 
 		return list
 
