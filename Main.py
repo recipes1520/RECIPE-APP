@@ -158,6 +158,7 @@ class RecipeDisplay(webapp2.RequestHandler) :
 		q = query.fetch()
 
 		recipe = q[0]
+
 		#will load a default image if none provided.
 		if recipe.image == None :
 			imgURL = '../img/defaultImage.jpg'
