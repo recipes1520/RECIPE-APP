@@ -1,7 +1,6 @@
 import cgi
 import webapp2
 import os
-import urllib
 import DomainModel
 
 from google.appengine.ext import ndb
@@ -10,7 +9,6 @@ from google.appengine.api import users
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.api import images
-from google.appengine.api import search
 
 
 # This class is a request handler for the Main Page.
@@ -21,7 +19,6 @@ class MainPage(webapp2.RequestHandler) :
 		render_template(self, template_values, path)
 
 class SubmitPage(webapp2.RequestHandler) :
-	# implementing the get method here allows this class to handle GET requests.
 	def get(self) :
 		upload_url = blobstore.create_upload_url('/recipes/upload')
 		template_values = {'uploadURL': upload_url}
@@ -87,8 +84,6 @@ def render_template(self, template_values, path):
 
 	self.response.out.write(template.render(os.path.join(os.path.dirname(__file__),path), temp_values))
 
-# we use this to set up the AppEngine app - each of the mappings identifies a
-# URL and the webapp2.RequestHandler class that handles requests to that URL
 app = webapp2.WSGIApplication([
   ('/', MainPage),
   ('/recipe-submit', SubmitPage),
