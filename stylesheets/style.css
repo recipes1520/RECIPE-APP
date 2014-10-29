@@ -201,6 +201,7 @@ input:hover, textarea:hover {
     outline: none !important;
     color: white;
     border: none;
+    cursor: pointer;
     background-color: #586CDE !important;
 }
 

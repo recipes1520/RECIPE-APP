@@ -99,8 +99,9 @@
 	<div class="userReviewPost">
 		<h3>Reviews and ratings </h3>
 		<h3> Average Rating: {{recipe.avg_rating|floatformat:1}} </h3>
+		<div id="commentSection">
 		{% for review in reviews %}
-		<table class="userReviewTable">
+		<table id="commentSection" class="userReviewTable">
 			<tr>
 				<td>{{ review.author }}</td>
 			</tr>
@@ -116,12 +117,13 @@
 				</td>
 			</tr>
 		</table>
-		{% endfor %}   		        
+		{% endfor %}   	
+		</div>	        
 	</div> <!-- END USER REVIEWS -->
 	<!-- RECIPE REVIEW FORM -->
 	<div class="recipeReview">
 		<h3> Submit Your Review </h3>
-		<form action="/recipes/submit_comment" method="post">
+		<form id ="commentForm" action="/recipes/submit_comment" method="post">
 			<!-- <input type="text" placeholder="Receipe Name" name="recipe" id="recipe" maxlength=255 required=TRUE/> <br> -->
 			<table id="user_info_review">
 				<tr>
@@ -129,7 +131,7 @@
 				</tr>
 			</table>
 			<!--<input type="text" placeholder="Receipe Author" name="author" id="author" maxlength=255 required=TRUE/> <br> -->
-			<label class=radioLabel"> Rating: </label>
+			<label class="radioLabel"> Rating: </label>
 			<label class="radioLabel">
 				5 <input type="radio" name="rating" value="5" required=TRUE>
 			</label> 
@@ -149,9 +151,9 @@
 				0 <input type="radio" name="rating" value="0" required=TRUE> 
 			</label> <br>
 			<textarea rows="4" cols="50" placeholder="Comments" name="comments" id="comments" maxlength=255 required=TRUE></textarea>
-			<input type="hidden" name="recipeTitle" value="{{recipe.title}}">
-			<div class="button">
-				<input type="submit" value="Submit">
+			<input type="hidden" id="recipeTitle" name="recipeTitle" value="{{recipe.title}}">
+			<div onclick="postComment();" class="button">
+				<input class="button" value="Submit">
 			</div>
 		</form>
 	</div>  <!-- END RECIPE REVIEW FORM  CONTAINER-->

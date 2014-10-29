@@ -1,6 +1,7 @@
 import cgi
 import webapp2
 import os
+import json
 import DomainModel
 
 from google.appengine.ext import ndb
@@ -19,9 +20,13 @@ class CommentSection(webapp2.RequestHandler) :
 			input_comments = str(cgi.escape(self.request.get('comments')))
 			self.store_comment(input_recipe, input_author, input_rating,
 						   input_comments)
-			self.redirect("/recipes/" + input_recipe.replace(' ', '_'))
+			
+			self.response.headers['Content-Type'] = 'application/json' 
+			json_comment_object = {'author' : input_author, 'rating' : input_rating, 'commentText' : input_comments }
+
+			self.response.write(json.dumps(json_comment_object))
 		except(TypeError, ValueError):
-			self.response.out.write('<html><body>Invalid input</html></body')
+			self.response.out.write('<html><body>Invalid input</body></html>')
 
 	def store_comment(self, input_recipe, input_author, input_rating,
 					  input_comments) :
