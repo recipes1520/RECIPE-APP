@@ -38,7 +38,7 @@ function postComment( ) {
       var commentSection = document.getElementById('commentSection');
       var commentTable = document.createElement('table');
       commentSection.innerHTML += " \
-      <table> \
+      <table id=\""+commentObject.key+"\"> \
       <tr><td>"+commentObject.author+"</td></tr> \
       <tr><td>"+ new Date().toUTCString()+"</td></tr> \
       <tr><td id=\"rate\">"+commentObject.rating+" out of 5</td></tr> \

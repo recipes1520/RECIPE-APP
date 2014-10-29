@@ -21,8 +21,8 @@ class CommentSection(webapp2.RequestHandler) :
 			self.store_comment(input_recipe, input_author, input_rating,
 						   input_comments)
 			
-			self.response.headers['Content-Type'] = 'application/json' 
-			json_comment_object = {'author' : input_author, 'rating' : input_rating, 'commentText' : input_comments }
+			key = self.response.headers['Content-Type'] = 'application/json' 
+			json_comment_object = {'comment_key': key, author' : input_author, 'rating' : input_rating, 'commentText' : input_comments }
 
 			self.response.write(json.dumps(json_comment_object))
 		except(TypeError, ValueError):
@@ -36,8 +36,9 @@ class CommentSection(webapp2.RequestHandler) :
 		comment.rating = input_rating
 		comment.comment = input_comments
 		self.update_recipe_comment_section(input_recipe, comment)
-		comment.put()
-	
+		key = comment.put()
+		return key
+
 	def update_recipe_comment_section(self, recipe_name, comment) :	
 		query = DomainModel.Recipe.query(DomainModel.Recipe.title == recipe_name )	
 		recipe = query.fetch()[0]
