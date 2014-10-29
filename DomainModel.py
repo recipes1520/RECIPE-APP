@@ -24,3 +24,7 @@ class Recipe(ndb.Model) :
 	avg_rating = ndb.FloatProperty(default=0)
 	image = ndb.BlobKeyProperty()
 	comment_section = ndb.StructuredProperty(ReviewSubmission, repeated=True)
+
+class Search(ndb.Model) :
+	keyWord = ndb.StringProperty()
+	recipeKeys = ndb.KeyProperty(repeated=True)
