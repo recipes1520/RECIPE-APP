@@ -20,8 +20,11 @@ handlers:
 - url: .+/js
   static_dir: js
 
+- url: /recipes/.*
+  script: RecipeHandlers.app
+
 - url: /.*
-  script: Main.app
+  script: MainHandlers.app
 
 libraries:
 - name: webapp2
