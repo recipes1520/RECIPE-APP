@@ -52,16 +52,44 @@ class UploadRecipe(blobstore_handlers.BlobstoreUploadHandler):
 			recipe.image = img[0].key()
 		
 		#all this is for ndb store of recipe text
-		recipe.title = str(cgi.escape(self.request.get('recipe_title')))
+		recipeTitle = str(cgi.escape(self.request.get('recipe_title')))
+		recipe.title = recipeTitle
 		recipe.user_author= str(users.get_current_user())
-		recipe.ingredients = self.getIngredients()
+		#this is a list of ingredients
+		ingredientList = self.getIngredients()
+		recipe.ingredients = ingredientList
 		recipe.instructions = self.getInstructions()
 		recipe.description = str(cgi.escape(self.request.get('description')))
 		recipe.prep_time_est = str(cgi.escape(self.request.get('prep_time'))) #PREP TIME ONLY.  WILL UPDATE WITH + COOK
 		recipe.cook_time_est = str(cgi.escape(self.request.get('cook_time')))
-		recipe.put()
+
+		#this will store our recipe as a recipe Model and returns its specific key for search
+		key = recipe.put()
+
+		#we need to tokenize recipe name
+		name_list = recipeTitle.split(" ")
+		self.create_search(name_list, key)
+
+		#making ingredients searchable
+		ingredient_list = self.request.get_all('ingredients')
+		self.create_search(ingredient_list, key)
 
 		self.redirect('/recipe-submit')
+
+	def create_search(self, names, key) :
+		for word in names :
+			try :
+				query = DomainModel.Search.query(DomainModel.Search.keyWord == word)
+				searchEntry = query.fetch()[0]
+				keyList = searchEntry.recipeKeys
+				keyList.append(key)
+				searchEntry.recipeKeys = keyList
+			except IndexError :
+				searchEntry = DomainModel.Search()
+				searchEntry.keyWord = word
+				keyList = []
+				keyList.append(key)
+				searchEntry.recipeKeys = keyList
 
 	def getIngredients(self) :
 		ingredients = self.request.get_all('ingredients')
