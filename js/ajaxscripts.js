@@ -48,6 +48,8 @@ function postComment( ) {
       <tr><td id=\"rate\">"+commentObject.rating+" out of 5</td></tr> \
       <tr><td><p id=\"comment\">" +commentObject.commentText+"</p></td></tr> \
       </table>";
+
+      document.getElementById('comments').value = "";
       }
       
     }
