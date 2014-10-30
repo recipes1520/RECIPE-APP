@@ -14,7 +14,7 @@ from google.appengine.api import images
 class CommentSection(webapp2.RequestHandler) :
 	def post(self) :
 		user = users.get_current_user()
-		if not user :
+		if user == None :
 			self.response.out.write(json.dumps({"userStatus": "false"}))
 		else :
 			try :
@@ -27,7 +27,7 @@ class CommentSection(webapp2.RequestHandler) :
 				
 				self.response.headers['Content-Type'] = 'application/json' 
 				self.update_user_info(comment_key)
-				json_comment_object = {'author': input_author, 'rating': input_rating, 'commentText': input_comments, "userStatus": "false"}
+				json_comment_object = {'author': input_author, 'rating': input_rating, 'commentText': input_comments, "userStatus": "true"}
 
 				self.response.write(json.dumps(json_comment_object))
 			except(TypeError, ValueError):
