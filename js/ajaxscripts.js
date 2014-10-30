@@ -75,13 +75,13 @@ function getProfile( ) {
       // we parse the content of the response
       var profileObject = JSON.parse(xmlHttp.responseText);
       var profileSection = document.getElementById('profileSection');
-      profileSection.innerHTML += " \
+      profileSection.innerHTML = " \
       <table> \
       <tr><td> Email: "+profileObject.email+"</td></tr> \
-      <tr><td> Nickname: "+profileObject.username+"</td></tr> \
       </table>";  
     }
   }
-
-  postParameters(xmlHttp, '/recipes/submit_comment', '');
+  
+  parameters = ''
+  postParameters(xmlHttp, '/profile', parameters);
 }

@@ -2,6 +2,7 @@ import cgi
 import webapp2
 import os
 import DomainModel
+import json
 
 from google.appengine.ext import ndb
 from google.appengine.ext.webapp import template
@@ -24,12 +25,21 @@ class UserAuth(webapp2.RequestHandler):
 		user = users.get_current_user()
 		query = ndb.gql("SELECT * FROM Account WHERE user_id = :1", user.user_id())
 		if query.count() == 0 :
-			self.redirect('/recipe-submit')
 			account = DomainModel.Account()
 			account.user_id = user.user_id()
 			account.user_email = user.email()
 			account.put()
 		self.redirect('/')
+
+class GetProfile(webapp2.RequestHandler):
+
+	def post(self) :
+		user = users.get_current_user()
+		query = ndb.gql("SELECT * FROM Account WHERE user_id = :1", user.user_id())
+		account = query.get()
+		json_account_object = {'email': user.email() }
+		self.response.headers['Content-Type'] = 'application/json' 
+		self.response.write(json.dumps(json_account_object))
 
 class SubmitPage(webapp2.RequestHandler) :
 	def get(self) :
@@ -106,5 +116,6 @@ app = webapp2.WSGIApplication([
   ('/', MainPage),
   ('/recipe-submit', SubmitPage),
   ('/search', SearchHandler),
-  ('/authorize', UserAuth)
+  ('/authorize', UserAuth),
+  ('/profile', GetProfile)
 ], debug=True)
