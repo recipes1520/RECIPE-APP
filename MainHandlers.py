@@ -68,56 +68,68 @@ class SearchHandler(webapp2.RequestHandler) :
 		template_values = {
 		  'recipes' : recipe_titles,
 		  'image_urls' : image_urls,
-          'zipped' : zipped,
+		  'zipped' : zipped,
 		  'search_query': search_query
 		}
 		path = 'templates/search-results.html'
 		render_template(self, template_values, path)
-                
+class RecipeLister(webapp2.RequestHandler):
+	def get(self):
+		query = DomainModel.Recipe.query(DomainModel.Recipe.user_author == users.get_current_user())
+		recipes = query.fetch()
+		titles = []
+		for thing in recipes :
+			titles.append(thing.title)
+		object = {}
+		object['titles'] = titles
+
+		self.response.write(json.dumps(object))
+
+
 class ShoplistHandler(webapp2.RequestHandler):
   def get(self):
-    list_objects = self.getShoppingList()
-    json_return_object = {}
-    items = []
-    for item in list_objects :
-    	items.append(item.item)
-    json_return_object['shoppingList'] = items
+	list_objects = self.getShoppingList()
+	json_return_object = {}
+	items = []
+	for item in list_objects :
+		items.append(item.item)
+	json_return_object['shoppingList'] = items
 
-    self.response.write(json.dumps(json_return_object))
-    
+	self.response.write(json.dumps(json_return_object))
+
   def post(self):
-    action = cgi.escape(self.request.get('action'))
-    shoplist_item = cgi.escape(self.request.get('shopitem'))
-    
-    if action == 'add':
-      self.storeShoppingList(shoplist_item)
-      shopping_list_item_json = {'item' : shoplist_item, 'action': action }
-    elif action == 'clear':
-      self.deleteShoppingList()
-      shopping_list_item_json = {'action': action }
+	action = cgi.escape(self.request.get('action'))
+	shoplist_item = cgi.escape(self.request.get('shopitem'))
 
-    self.response.headers['Content-Type'] = 'application/json' 
-    self.response.write(json.dumps(shopping_list_item_json))
-    
+	if action == 'add':
+	  self.storeShoppingList(shoplist_item)
+	  shopping_list_item_json = {'item' : shoplist_item, 'action': action }
+	elif action == 'clear':
+	  self.deleteShoppingList()
+	  shopping_list_item_json = {'action': action }
+
+	self.response.headers['Content-Type'] = 'application/json'
+	self.response.write(json.dumps(shopping_list_item_json))
+
   def storeShoppingList(self, shopping_item):
-    user = users.get_current_user()
-    
-    shoplist = DomainModel.Shoplist()
-    shoplist.item = shopping_item
-    shoplist.user_id = user.user_id()
-    shoplist.put()
+	user = users.get_current_user()
+
+	shoplist = DomainModel.Shoplist()
+	shoplist.item = shopping_item
+	shoplist.user_id = user.user_id()
+	shoplist.put()
   
   def getShoppingList(self):
-    user = users.get_current_user()
-    
-    query = DomainModel.Shoplist.query(DomainModel.Shoplist.user_id == user.user_id())
-    
-    return query.fetch()
+	user = users.get_current_user()
+
+	query = DomainModel.Shoplist.query(DomainModel.Shoplist.user_id == user.user_id())
+
+	return query.fetch()
   
   def deleteShoppingList(self):
-    user = users.get_current_user()
-    query = DomainModel.Shoplist.query(DomainModel.Shoplist.user_id == user.user_id())
-    ndb.delete_multi(query.fetch(keys_only=True))
+	user = users.get_current_user()
+	query = DomainModel.Shoplist.query(DomainModel.Shoplist.user_id == user.user_id())
+	ndb.delete_multi(query.fetch(keys_only=True))
 
 def get_key() :
 	return ndb.Key('recipe_name', 'author')
@@ -153,5 +165,6 @@ app = webapp2.WSGIApplication([
   ('/recipe-submit', SubmitPage),
   ('/search', SearchHandler),
   ('/shoplist', ShoplistHandler),
+  ('/recipelist', RecipeLister),
   ('/authorize', UserAuth)
 ], debug=True)
