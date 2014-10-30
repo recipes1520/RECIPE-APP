@@ -63,7 +63,10 @@ class SearchHandler(webapp2.RequestHandler) :
 			else :
 				image_urls.append(images.get_serving_url(recipe.image, size=None, crop=False, secure_url=True))
 
-		zipped = zip(recipe_titles, image_urls)
+		everythingZipped = zip(recipe_titles, image_urls)
+		setZip = set(everythingZipped)
+		zipped = []
+		zipped = setZip
 
 		template_values = {
 		  'recipes' : recipe_titles,
