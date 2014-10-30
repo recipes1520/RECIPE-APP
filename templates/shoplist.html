@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block titlecontent %}
+<title>CookUp - My Shopping List</title>
+{% endblock %}
+{% block bodycontent %}
+<div class="mainContainer">   
+ <div class="shoppingListContainer">
+   <div class="shoppingList">
+     <h3>Shopping list</h3>
+     <p id="shoppingListItems">
+     {% for row in shopping_list %}
+     {{ row.item }}<br>
+     {% endfor %}
+     </p>
+     <input type="text" name="list_item" id="shoppingListItem" placeholder="ex. 4 x Eggs" maxlength="100">
+   </div>
+     <input type="button" value="Add" onclick="addShoppingListItem()">
+     <input type="button" value="Clear shopping list" onclick="clearShoppingList()">
+ </div>
+ <script type="text/javascript">
+   function addShoppingListItem()
+   {
+     var item = document.getElementById('shoppingListItem');
+     sendItemUsingAJAX(item.value);
+     // clear input field
+     item.value = '';
+   }
+   
+   function sendItemUsingAJAX(item)
+   {
+     var xmlhttp = new XMLHttpRequest(); 
+     if (xmlhttp) {
+       xmlhttp.onreadystatechange=function()
+       {
+         if (xmlhttp.readyState==4 && xmlhttp.status==200)
+         {
+           var response = xmlhttp.responseText;
+           var json = JSON.parse(response);
+           
+           var shoppingListItems = document.getElementById('shoppingListItems');
+           shoppingListItems.innerHTML = shoppingListItems.innerHTML + json.item + '<br>';
+         }
+       }
+       xmlhttp.open("post", "/shoplist", true);
+       xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+       xmlhttp.send("action=add&shopitem=" + encodeURIComponent(item));
+     }
+    }
+     
+    function clearShoppingList()
+    {
+     var xmlhttp = new XMLHttpRequest(); 
+     if (xmlhttp) {
+       xmlhttp.onreadystatechange=function()
+       {
+         if (xmlhttp.readyState==4 && xmlhttp.status==200)
+         {
+           var shoppingListItems = document.getElementById('shoppingListItems');
+           shoppingListItems.innerHTML = '';
+         }
+       }
+       xmlhttp.open("post", "/shoplist", true);
+       xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+       xmlhttp.send("action=clear");
+     }
+    }
+ </script>
+{% endblock %}
