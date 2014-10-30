@@ -56,16 +56,6 @@
 <!-- /.container-fluid -->   </nav></div>
  </div>
  <div class="mainContainer">
-  {% block bodycontent %} {% endblock %} <!-- <div class="mainContainer">
-       <div class="navbar">
-        {% for link in nav_bar %}
-        <div class="menuButton"><a href="{{ link.0 }}">{{link.1}}</a></div>
-        {% endfor %}
-        {% if login_link != '' %}
-        <div class="menuButton"><a href="{{ login_link }}">Login</a></div>
-        {% else %}
-        <div class="menuButton"><a href="{{ logout_link }}">Logout</a></div>
-        {% endif %}
-        <div class="menuButton"> {{ user }} </div>
-    </div> <!-- END NAVBAR --></div>
+  {% block bodycontent %} 
+  {% endblock %} 
 </body>

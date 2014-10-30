@@ -13,21 +13,25 @@ from google.appengine.api import images
 
 class CommentSection(webapp2.RequestHandler) :
 	def post(self) :
-		try :
-			input_recipe = str(cgi.escape(self.request.get('recipeTitle')))
-			input_author = str(users.get_current_user())
-			input_rating = int(cgi.escape(self.request.get('rating')))
-			input_comments = str(cgi.escape(self.request.get('comments')))
-			comment_key = self.store_comment(input_recipe, input_author, input_rating,
-						   input_comments)
-			
-			self.response.headers['Content-Type'] = 'application/json' 
-			self.update_user_info(comment_key)
-			json_comment_object = {'author': input_author, 'rating': input_rating, 'commentText': input_comments}
+		user = users.get_current_user()
+		if not user :
+			self.response.out.write(json.dumps({"userStatus": "false"}))
+		else :
+			try :
+				input_recipe = str(cgi.escape(self.request.get('recipeTitle')))
+				input_author = str(user)
+				input_rating = int(cgi.escape(self.request.get('rating')))
+				input_comments = str(cgi.escape(self.request.get('comments')))
+				comment_key = self.store_comment(input_recipe, input_author, input_rating,
+							   input_comments)
+				
+				self.response.headers['Content-Type'] = 'application/json' 
+				self.update_user_info(comment_key)
+				json_comment_object = {'author': input_author, 'rating': input_rating, 'commentText': input_comments, "userStatus": "false"}
 
-			self.response.write(json.dumps(json_comment_object))
-		except(TypeError, ValueError):
-			self.response.out.write('<html><body>Invalid input</body></html>')
+				self.response.write(json.dumps(json_comment_object))
+			except(TypeError, ValueError):
+				self.response.out.write('<html><body>Invalid input</body></html>')
 
 	def store_comment(self, input_recipe, input_author, input_rating,
 					  input_comments) :

@@ -35,6 +35,10 @@ function postComment( ) {
     if (xmlHttp.readyState == 4) {
       // we parse the content of the response
       var commentObject = JSON.parse(xmlHttp.responseText);
+      if( commentObject.userStatus == "false"){
+          alert("Must be logged in to comment");
+          return;
+      }
       var commentSection = document.getElementById('commentSection');
       commentSection.innerHTML += " \
       <table> \
@@ -43,9 +47,10 @@ function postComment( ) {
       <tr><td id=\"rate\">"+commentObject.rating+" out of 5</td></tr> \
       <tr><td><p id=\"comment\">" +commentObject.commentText+"</p></td></tr> \
       </table>";
+      }
       
     }
-  }
+  
 
 
   var rating;
