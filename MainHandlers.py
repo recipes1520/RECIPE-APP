@@ -26,7 +26,18 @@ class SubmitPage(webapp2.RequestHandler) :
 		path = 'templates/recipe-submission.html'
 		render_template(self, template_values, path)
 
+class UserAuth(webapp2.RequestHandler):
 
+	def get(self) :
+		user = users.get_current_user()
+		query = ndb.gql("SELECT * FROM Account WHERE user_id = :1", user.user_id())
+		if query.count() == 0 :
+			self.redirect('/recipe-submit')
+			account = DomainModel.Account()
+			account.user_id = user.user_id()
+			account.user_email = user.email()
+			account.put()
+		self.redirect('/')
 
 class SearchHandler(webapp2.RequestHandler) :
 	def post(self) :
@@ -126,7 +137,7 @@ def render_template(self, template_values, path):
 		logout = users.create_logout_url('/')
 		user_email = user.email()
 	else :
-		login = users.create_login_url('/')
+		login = users.create_login_url('/authorize')
 	default_values = {
 		'login_link': login,
 		'logout_link': logout,
@@ -141,5 +152,6 @@ app = webapp2.WSGIApplication([
   ('/', MainPage),
   ('/recipe-submit', SubmitPage),
   ('/search', SearchHandler),
-  ('/shoplist', ShoplistHandler)
+  ('/shoplist', ShoplistHandler),
+  ('/authorize', UserAuth)
 ], debug=True)
