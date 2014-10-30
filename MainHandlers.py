@@ -67,7 +67,7 @@ class SearchHandler(webapp2.RequestHandler) :
 		image_urls = []
 		for recipe in recipes :
 			recipe_titles.append((recipe.title, recipe.title.replace(" ", "_")))
-			if recipe.image == None :
+			if recipe.image is None :
 				image_urls.append('../img/defaultImage.jpg')
 			else :
 				image_urls.append(images.get_serving_url(recipe.image, size=None, crop=False, secure_url=True))

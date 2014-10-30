@@ -51,10 +51,10 @@ class CommentSection(webapp2.RequestHandler) :
 	def update_user_info(self, comment_key) :	
 		user = users.get_current_user()
 		query = ndb.gql("SELECT * FROM Account WHERE user_id = :1", user.user_id())
- 		account = query.get()
- 		if account :
- 			account.user_reviews.append(comment_key)	
- 			account.put()
+		account = query.get()
+		if account :
+			account.user_reviews.append(comment_key)
+			account.put()
 
 class UploadRecipe(blobstore_handlers.BlobstoreUploadHandler):
 	def post(self):
@@ -87,7 +87,10 @@ class UploadRecipe(blobstore_handlers.BlobstoreUploadHandler):
 
 		#making ingredients searchable
 		ingredient_list = self.request.get_all('ingredients')
-		self.create_search(ingredient_list, key)
+		split_ingredients = []
+		for item in ingredient_list :
+			split_ingredients = split_ingredients + item.split(" ")
+		self.create_search(split_ingredients, key)
 
 		self.redirect('/recipe-submit')
 
