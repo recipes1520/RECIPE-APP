@@ -46,7 +46,7 @@ class SearchHandler(webapp2.RequestHandler) :
 		search_results = []
 		search_words = search_query.split(" ")
 		for word in search_words :
-			query = DomainModel.Search.query(DomainModel.Search.keyWord == word)
+			query = DomainModel.Search.query(DomainModel.Search.keyWord == word.lower())
 			search_results = search_results + query.fetch()
 
 		recipes = []

@@ -99,7 +99,8 @@ class UploadRecipe(blobstore_handlers.BlobstoreUploadHandler):
 		self.redirect('/recipe-submit')
 
 	def create_search(self, names, key) :
-		for word in names :
+		for item in names :
+			word = item.lower()
 			query = DomainModel.Search.query(DomainModel.Search.keyWord == word)
 			searchEntry = query.fetch()
 			if len(searchEntry) > 0 :
