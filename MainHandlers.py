@@ -75,7 +75,7 @@ class SearchHandler(webapp2.RequestHandler) :
 		render_template(self, template_values, path)
 class RecipeLister(webapp2.RequestHandler):
 	def get(self):
-		query = DomainModel.Recipe.query(DomainModel.Recipe.user_author == users.get_current_user())
+		query = DomainModel.Recipe.query(DomainModel.Recipe.user_author == str(users.get_current_user()))
 		recipes = query.fetch()
 		titles = []
 		for thing in recipes :

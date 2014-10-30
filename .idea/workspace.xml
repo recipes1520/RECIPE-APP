@@ -4,7 +4,6 @@
     <list default="true" id="8fafb786-d7d8-4102-aa14-c0d8963b0fa0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MainHandlers.py" afterPath="$PROJECT_DIR$/MainHandlers.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/ajaxscripts.js" afterPath="$PROJECT_DIR$/js/ajaxscripts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base.html" afterPath="$PROJECT_DIR$/templates/base.html" />
     </list>
     <ignored path="RECIPE-APP.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -47,21 +46,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainHandlers.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="MainHandlers.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MainHandlers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48472506" vertical-offset="1020" max-vertical-offset="2805">
-              <caret line="85" column="39" selection-start-line="85" selection-start-column="39" selection-end-line="85" selection-end-column="39" />
+            <state vertical-scroll-proportion="-1.28" vertical-offset="1090" max-vertical-offset="2805">
+              <caret line="77" column="104" selection-start-line="77" selection-start-column="104" selection-end-line="77" selection-end-column="104" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ajaxscripts.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ajaxscripts.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/ajaxscripts.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-55.67857" vertical-offset="1450" max-vertical-offset="3264">
-              <caret line="177" column="93" selection-start-line="177" selection-start-column="93" selection-end-line="177" selection-end-column="93" />
+            <state vertical-scroll-proportion="0.477459" vertical-offset="2776" max-vertical-offset="3281">
+              <caret line="177" column="32" selection-start-line="177" selection-start-column="32" selection-end-line="177" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -70,7 +69,7 @@
       <file leaf-file-name="base.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.5" vertical-offset="1342" max-vertical-offset="2023">
+            <state vertical-scroll-proportion="-12.461538" vertical-offset="1291" max-vertical-offset="2023">
               <caret line="95" column="21" selection-start-line="95" selection-start-column="21" selection-end-line="95" selection-end-column="21" />
               <folding />
             </state>
@@ -90,7 +89,7 @@
       <file leaf-file-name="RecipeHandlers.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/RecipeHandlers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.12" vertical-offset="0" max-vertical-offset="3145">
+            <state vertical-scroll-proportion="28.56" vertical-offset="867" max-vertical-offset="3145">
               <caret line="20" column="75" selection-start-line="20" selection-start-column="64" selection-end-line="20" selection-end-column="75" />
               <folding />
             </state>
@@ -130,8 +129,8 @@
         <option value="$PROJECT_DIR$/DomainModel.py" />
         <option value="$PROJECT_DIR$/RecipeHandlers.py" />
         <option value="$PROJECT_DIR$/templates/base.html" />
-        <option value="$PROJECT_DIR$/js/ajaxscripts.js" />
         <option value="$PROJECT_DIR$/MainHandlers.py" />
+        <option value="$PROJECT_DIR$/js/ajaxscripts.js" />
       </list>
     </option>
   </component>
@@ -783,14 +782,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/RecipeHandlers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.12" vertical-offset="0" max-vertical-offset="3145">
-          <caret line="20" column="75" selection-start-line="20" selection-start-column="64" selection-end-line="20" selection-end-column="75" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DomainModel.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-18.52" vertical-offset="64" max-vertical-offset="731">
@@ -809,24 +800,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.5" vertical-offset="1342" max-vertical-offset="2023">
+        <state vertical-scroll-proportion="-12.461538" vertical-offset="1291" max-vertical-offset="2023">
           <caret line="95" column="21" selection-start-line="95" selection-start-column="21" selection-end-line="95" selection-end-column="21" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/ajaxscripts.js">
+    <entry file="file://$PROJECT_DIR$/RecipeHandlers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-55.67857" vertical-offset="1450" max-vertical-offset="3264">
-          <caret line="177" column="93" selection-start-line="177" selection-start-column="93" selection-end-line="177" selection-end-column="93" />
+        <state vertical-scroll-proportion="28.56" vertical-offset="867" max-vertical-offset="3145">
+          <caret line="20" column="75" selection-start-line="20" selection-start-column="64" selection-end-line="20" selection-end-column="75" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/MainHandlers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48472506" vertical-offset="1020" max-vertical-offset="2805">
-          <caret line="85" column="39" selection-start-line="85" selection-start-column="39" selection-end-line="85" selection-end-column="39" />
+        <state vertical-scroll-proportion="-1.28" vertical-offset="1090" max-vertical-offset="2805">
+          <caret line="77" column="104" selection-start-line="77" selection-start-column="104" selection-end-line="77" selection-end-column="104" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/ajaxscripts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.477459" vertical-offset="2776" max-vertical-offset="3281">
+          <caret line="177" column="32" selection-start-line="177" selection-start-column="32" selection-end-line="177" selection-end-column="32" />
           <folding />
         </state>
       </provider>

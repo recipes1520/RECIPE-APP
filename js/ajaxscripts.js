@@ -172,10 +172,11 @@ function loadRecipeList(){
            var recipeListObject = JSON.parse(xmlhttp.responseText);
            var recipeListSection = document.getElementById('myRecipes');
            var recipeListHTML = "";
+           var temp;
            var item_list = recipeListObject.titles;
            for( i in item_list ){
-             var temp = item_list[i].replace(" ", "_");
-             recipeListHTML += ('<a name="link" href="/recipes/' + temp + '">' + item_list[i] + '</a><br>');
+             temp = item_list[i].replace(" ", "_");
+             recipeListHTML += '<a name="link" href="/recipes/' + temp + '">' + item_list[i] + '</a><br>';
            }
            myRecipes.innerHTML = recipeListHTML;
          }
