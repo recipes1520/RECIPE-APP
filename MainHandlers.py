@@ -1,8 +1,9 @@
 import cgi
 import webapp2
 import os
-import DomainModel
 import json
+import DomainModel
+import ShoplistModel
 
 from google.appengine.ext import ndb
 from google.appengine.ext.webapp import template
@@ -19,28 +20,6 @@ class MainPage(webapp2.RequestHandler) :
 		path = 'templates/index.html'
 		render_template(self, template_values, path)
 
-class UserAuth(webapp2.RequestHandler):
-
-	def get(self) :
-		user = users.get_current_user()
-		query = ndb.gql("SELECT * FROM Account WHERE user_id = :1", user.user_id())
-		if query.count() == 0 :
-			account = DomainModel.Account()
-			account.user_id = user.user_id()
-			account.user_email = user.email()
-			account.put()
-		self.redirect('/')
-
-class GetProfile(webapp2.RequestHandler):
-
-	def post(self) :
-		user = users.get_current_user()
-		query = ndb.gql("SELECT * FROM Account WHERE user_id = :1", user.user_id())
-		account = query.get()
-		json_account_object = {'email': user.email() }
-		self.response.headers['Content-Type'] = 'application/json' 
-		self.response.write(json.dumps(json_account_object))
-
 class SubmitPage(webapp2.RequestHandler) :
 	def get(self) :
 		upload_url = blobstore.create_upload_url('/recipes/upload')
@@ -48,26 +27,21 @@ class SubmitPage(webapp2.RequestHandler) :
 		path = 'templates/recipe-submission.html'
 		render_template(self, template_values, path)
 
+
+
 class SearchHandler(webapp2.RequestHandler) :
 	def post(self) :
 
 		search_query = self.request.get('searchInput')
-		search_results = []
-		search_words = search_query.split(" ")
-		for word in search_words :
-			query = DomainModel.Search.query(DomainModel.Search.keyWord == word)
-			search_results = search_results + query.fetch()
-
-		recipes = []
-		for thing in search_results :
-			for key_num in thing.recipeKeys :
-				recipes.append(key_num.get())
+		query = DomainModel.Recipe.query(ancestor=get_key()).order(
+				-DomainModel.Recipe.title)
+		recipes = query.fetch()
 
 		recipe_titles = []
 		image_urls = []
 		for recipe in recipes :
 			recipe_titles.append((recipe.title, recipe.title.replace(" ", "_")))
-			if recipe.image is None :
+			if recipe.image == None :
 				image_urls.append('../img/defaultImage.jpg')
 			else :
 				image_urls.append(images.get_serving_url(recipe.image, size=None, crop=False, secure_url=True))
@@ -77,11 +51,55 @@ class SearchHandler(webapp2.RequestHandler) :
 		template_values = {
 		  'recipes' : recipe_titles,
 		  'image_urls' : image_urls,
-		  'zipped' : zipped,
+          'zipped' : zipped,
 		  'search_query': search_query
 		}
 		path = 'templates/search-results.html'
 		render_template(self, template_values, path)
+                
+class ShoplistHandler(webapp2.RequestHandler):
+  def get(self):
+    
+    template_values = {
+      'shopping_list': self.getShoppingList()
+    }
+    path = 'templates/shoplist.html'
+    
+    render_template(self, template_values, path)
+    
+  def post(self):
+    action = cgi.escape(self.request.get('action'))
+    shoplist_item = cgi.escape(self.request.get('shopitem'))
+    
+    if action == 'add':
+      self.storeShoppingList(shoplist_item)
+      shopping_list_item_json = {'item' : shoplist_item, 'action': action }
+    elif action == 'clear':
+      self.deleteShoppingList()
+      shopping_list_item_json = {'action': action }
+
+    self.response.headers['Content-Type'] = 'application/json' 
+    self.response.write(json.dumps(shopping_list_item_json))
+    
+  def storeShoppingList(self, shopping_item):
+    user = users.get_current_user()
+    
+    shoplist = ShoplistModel.Shoplist()
+    shoplist.item = shopping_item
+    shoplist.user_id = user.user_id()
+    shoplist.put()
+  
+  def getShoppingList(self):
+    user = users.get_current_user()
+    
+    query = ShoplistModel.Shoplist.query(ShoplistModel.Shoplist.user_id == user.user_id())
+    
+    return query.fetch()
+  
+  def deleteShoppingList(self):
+    user = users.get_current_user()
+    query = ShoplistModel.Shoplist.query(ShoplistModel.Shoplist.user_id == user.user_id())
+    ndb.delete_multi(query.fetch(keys_only=True))
 
 def get_key() :
 	return ndb.Key('recipe_name', 'author')
@@ -101,7 +119,7 @@ def render_template(self, template_values, path):
 		logout = users.create_logout_url('/')
 		user_email = user.email()
 	else :
-		login = users.create_login_url('/authorize')
+		login = users.create_login_url('/')
 	default_values = {
 		'login_link': login,
 		'logout_link': logout,
@@ -116,6 +134,5 @@ app = webapp2.WSGIApplication([
   ('/', MainPage),
   ('/recipe-submit', SubmitPage),
   ('/search', SearchHandler),
-  ('/authorize', UserAuth),
-  ('/profile', GetProfile)
+  ('/shoplist', ShoplistHandler)
 ], debug=True)
