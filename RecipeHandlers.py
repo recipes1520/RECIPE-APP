@@ -22,7 +22,7 @@ class CommentSection(webapp2.RequestHandler) :
 						   input_comments)
 			
 			key = self.response.headers['Content-Type'] = 'application/json' 
-			json_comment_object = {'comment_key': key, author' : input_author, 'rating' : input_rating, 'commentText' : input_comments }
+			json_comment_object = {'comment_key': key, 'author' : input_author, 'rating' : input_rating, 'commentText' : input_comments }
 
 			self.response.write(json.dumps(json_comment_object))
 		except(TypeError, ValueError):
@@ -37,6 +37,7 @@ class CommentSection(webapp2.RequestHandler) :
 		comment.comment = input_comments
 		self.update_recipe_comment_section(input_recipe, comment)
 		key = comment.put()
+		self.update_user_info(key)
 		return key
 
 	def update_recipe_comment_section(self, recipe_name, comment) :	
@@ -46,6 +47,15 @@ class CommentSection(webapp2.RequestHandler) :
 		recipe.total_rating_points += comment.rating
 		recipe.avg_rating = float(recipe.total_rating_points)/len(recipe.comment_section)
 		recipe.put()
+	
+	def update_user_info(self, comment_key) :	
+		user = users.get_current_user()
+		query = ndb.gql("SELECT * FROM Account WHERE user_id = :1", user.user_id())
+ 		account = query.get()
+ 		if account :
+ 			account.user_reviews.append(comment_key)	
+ 			account.put()
+		
 
 class UploadRecipe(blobstore_handlers.BlobstoreUploadHandler):
 	def post(self):

@@ -28,3 +28,10 @@ class Recipe(ndb.Model) :
 class Search(ndb.Model) :
 	keyWord = ndb.StringProperty()
 	recipeKeys = ndb.KeyProperty(repeated=True)
+
+class Account(ndb.Model) :
+	user_email = ndb.StringProperty()
+	user_id = ndb.StringProperty()
+	user_nickname = ndb.StringProperty()
+	user_recipes = ndb.KeyProperty(repeated=True, kind=Recipe)
+	user_reviews = ndb.KeyProperty(repeated=True, kind=ReviewSubmission)
