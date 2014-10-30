@@ -32,9 +32,16 @@ class SearchHandler(webapp2.RequestHandler) :
 	def post(self) :
 
 		search_query = self.request.get('searchInput')
-		query = DomainModel.Recipe.query(ancestor=get_key()).order(
-				-DomainModel.Recipe.title)
-		recipes = query.fetch()
+		search_results = []
+		search_words = search_query.split(" ")
+		for word in search_words :
+			query = DomainModel.Search.query(DomainModel.Search.keyWord == word)
+			search_results = search_results + query.fetch()
+
+		recipes = []
+		for thing in search_results :
+			for key_num in thing.recipeKeys :
+				recipes.append(key_num.get())
 
 		recipe_titles = []
 		image_urls = []
