@@ -35,3 +35,7 @@ class Account(ndb.Model) :
 	user_nickname = ndb.StringProperty()
 	user_recipes = ndb.KeyProperty(repeated=True, kind=Recipe)
 	user_reviews = ndb.KeyProperty(repeated=True, kind=ReviewSubmission)
+
+class Shoplist(ndb.Model) :
+  item = ndb.StringProperty(indexed=False)
+  user_id = ndb.StringProperty(indexed=True)

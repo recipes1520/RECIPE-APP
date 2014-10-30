@@ -3,7 +3,6 @@ import webapp2
 import os
 import json
 import DomainModel
-import ShoplistModel
 
 from google.appengine.ext import ndb
 from google.appengine.ext.webapp import template
@@ -84,7 +83,7 @@ class ShoplistHandler(webapp2.RequestHandler):
   def storeShoppingList(self, shopping_item):
     user = users.get_current_user()
     
-    shoplist = ShoplistModel.Shoplist()
+    shoplist = DomainModel.Shoplist()
     shoplist.item = shopping_item
     shoplist.user_id = user.user_id()
     shoplist.put()
@@ -92,13 +91,13 @@ class ShoplistHandler(webapp2.RequestHandler):
   def getShoppingList(self):
     user = users.get_current_user()
     
-    query = ShoplistModel.Shoplist.query(ShoplistModel.Shoplist.user_id == user.user_id())
+    query = DomainModel.Shoplist.query(DomainModel.Shoplist.user_id == user.user_id())
     
     return query.fetch()
   
   def deleteShoppingList(self):
     user = users.get_current_user()
-    query = ShoplistModel.Shoplist.query(ShoplistModel.Shoplist.user_id == user.user_id())
+    query = DomainModel.Shoplist.query(DomainModel.Shoplist.user_id == user.user_id())
     ndb.delete_multi(query.fetch(keys_only=True))
 
 def get_key() :
