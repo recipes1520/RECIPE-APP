@@ -65,13 +65,14 @@ class SearchHandler(webapp2.RequestHandler) :
                 
 class ShoplistHandler(webapp2.RequestHandler):
   def get(self):
-    
-    template_values = {
-      'shopping_list': self.getShoppingList()
-    }
-    path = 'templates/shoplist.html'
-    
-    render_template(self, template_values, path)
+    list_objects = self.getShoppingList()
+    json_return_object = {}
+    items = []
+    for item in list_objects :
+    	items.append(item.item)
+    json_return_object['shoppingList'] = items
+
+    self.response.write(json.dumps(json_return_object))
     
   def post(self):
     action = cgi.escape(self.request.get('action'))

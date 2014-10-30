@@ -90,3 +90,74 @@ function getProfile( ) {
   parameters = ''
   postParameters(xmlHttp, '/profile', parameters);
 }
+
+
+function addShoppingListItem()
+   {
+     var item = document.getElementById('shoppingListItem');
+     sendItemUsingAJAX(item.value);
+     // clear input field
+     item.value = '';
+   }
+   
+   function sendItemUsingAJAX(item)
+   {
+     var xmlhttp = new XMLHttpRequest(); 
+     if (xmlhttp) {
+       xmlhttp.onreadystatechange=function()
+       {
+         if (xmlhttp.readyState==4 && xmlhttp.status==200)
+         {
+           var response = xmlhttp.responseText;
+           var json = JSON.parse(response);
+           
+           var shoppingListItems = document.getElementById('shoppingListItems');
+           shoppingListItems.innerHTML += json.item + '<br>';
+         }
+       }
+       xmlhttp.open("post", "/shoplist", true);
+       xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+       xmlhttp.send("action=add&shopitem=" + encodeURIComponent(item));
+     }
+    }
+   
+    function loadShoppingList(){
+     var xmlhttp = new XMLHttpRequest(); 
+     if (xmlhttp) {
+       
+       xmlhttp.onreadystatechange=function() {
+         if (xmlhttp.readyState==4 && xmlhttp.status==200){
+           
+           var shoppingListObject = JSON.parse(xmlhttp.responseText);
+           var shoppingListSection = document.getElementById('shoppingListItems');
+           var shoppingListHTML = "";
+           var item_list = shoppingListObject.shoppingList;
+           for( i in item_list ){
+             shoppingListHTML += (item_list[i] + '<br>');
+           }
+           shoppingListSection.innerHTML = shoppingListHTML;
+         }
+       }
+       xmlhttp.open("get", "/shoplist", true);
+       xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+       xmlhttp.send("action=load");
+     }
+    }
+     
+    function clearShoppingList()
+    {
+     var xmlhttp = new XMLHttpRequest(); 
+     if (xmlhttp) {
+       xmlhttp.onreadystatechange=function()
+       {
+         if (xmlhttp.readyState==4 && xmlhttp.status==200)
+         {
+           var shoppingListItems = document.getElementById('shoppingListItems');
+           shoppingListItems.innerHTML = '';
+         }
+       }
+       xmlhttp.open("post", "/shoplist", true);
+       xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+       xmlhttp.send("action=clear");
+     }
+    }

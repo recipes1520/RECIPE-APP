@@ -40,7 +40,7 @@
          <a href="#">Profile</a></li>
         <li>
          <a href="#">My Recipes</a></li>
-         <li><a href="/shoplist">My Shopping List</a></li>
+         <li><a onclick="loadShoppingList()" data-toggle="modal" data-target="#myModal" href='#'>My Shopping List</a></li>
         <li>
          <a href="#">Friends</a></li>
         <li class="divider">
@@ -55,6 +55,33 @@
 <!-- /.navbar-collapse -->   </div>
 <!-- /.container-fluid -->   </nav></div>
  </div>
+ <!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Shopping Cart</h4>
+      </div>
+      <div class="modal-body">
+        <div class="shoppingListContainer">
+   <div class="shoppingList">
+     <h3>Shopping list</h3>
+     <p id="shoppingListItems">
+
+     </p>
+     <input type="text" name="list_item" id="shoppingListItem" placeholder="ex. 4 x Eggs" maxlength="100">
+   </div>
+     <input type="button" value="Add" onclick="addShoppingListItem()">
+     <input type="button" value="Clear shopping list" onclick="clearShoppingList()">
+ </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
  <div class="mainContainer">
   {% block bodycontent %} 
   {% endblock %} 
