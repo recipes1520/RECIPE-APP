@@ -161,3 +161,28 @@ function addShoppingListItem()
        xmlhttp.send("action=clear");
      }
     }
+
+function loadRecipeList(){
+     var xmlhttp = new XMLHttpRequest();
+     if (xmlhttp) {
+
+       xmlhttp.onreadystatechange=function() {
+         if (xmlhttp.readyState==4 && xmlhttp.status==200){
+
+           var recipeListObject = JSON.parse(xmlhttp.responseText);
+           var recipeListSection = document.getElementById('myRecipes');
+           var recipeListHTML = "";
+           var temp;
+           var item_list = recipeListObject.titles;
+           for( i in item_list ){
+             temp = item_list[i].replace(" ", "_");
+             recipeListHTML += '<a name="link" href="/recipes/' + temp + '">' + item_list[i] + '</a><br>';
+           }
+           myRecipes.innerHTML = recipeListHTML;
+         }
+       }
+       xmlhttp.open("get", "/recipelist", true);
+       xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+       xmlhttp.send("action=load");
+     }
+    }

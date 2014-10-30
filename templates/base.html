@@ -39,7 +39,7 @@
         <li>
          <a href="#">Profile</a></li>
         <li>
-         <a href="#">My Recipes</a></li>
+         <a onclick="loadRecipeList()" data-toggle="modal" data-target="#recipeModal" href='#'>My Recipes</a></li>
          <li><a onclick="loadShoppingList()" data-toggle="modal" data-target="#myModal" href='#'>My Shopping List</a></li>
         <li>
          <a href="#">Friends</a></li>
@@ -74,6 +74,31 @@
    </div>
      <input type="button" value="Add" onclick="addShoppingListItem()">
      <input type="button" value="Clear shopping list" onclick="clearShoppingList()">
+ </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- This modal code is for listing the recipes a particular user has submitted -->
+ <div class="modal fade" id="recipeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">My Recipes</h4>
+      </div>
+      <div class="modal-body">
+        <div class="shoppingListContainer">
+   <div class="recipeList">
+     <h3>My Recipes</h3>
+     <p id="myRecipes">
+
+     </p>
+   </div>
  </div>
       </div>
       <div class="modal-footer">
