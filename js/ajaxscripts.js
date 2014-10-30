@@ -36,9 +36,8 @@ function postComment( ) {
       // we parse the content of the response
       var commentObject = JSON.parse(xmlHttp.responseText);
       var commentSection = document.getElementById('commentSection');
-      var commentTable = document.createElement('table');
       commentSection.innerHTML += " \
-      <table id=\""+commentObject.key+"\"> \
+      <table> \
       <tr><td>"+commentObject.author+"</td></tr> \
       <tr><td>"+ new Date().toUTCString()+"</td></tr> \
       <tr><td id=\"rate\">"+commentObject.rating+" out of 5</td></tr> \
@@ -63,4 +62,26 @@ function postComment( ) {
                '&comments='+ document.getElementById('comments').value
                
   postParameters(xmlHttp, '/recipes/submit_comment', parameters);
+}
+
+function getProfile( ) {
+  var xmlHttp = createXmlHttp();
+
+  // onreadystatechange will be called every time the state of the XML HTTP object changes
+  xmlHttp.onreadystatechange = function() {
+  
+    // we really only care about 4 (response complete) here.
+    if (xmlHttp.readyState == 4) {
+      // we parse the content of the response
+      var profileObject = JSON.parse(xmlHttp.responseText);
+      var profileSection = document.getElementById('profileSection');
+      profileSection.innerHTML += " \
+      <table> \
+      <tr><td> Email: "+profileObject.email+"</td></tr> \
+      <tr><td> Nickname: "+profileObject.username+"</td></tr> \
+      </table>";  
+    }
+  }
+
+  postParameters(xmlHttp, '/recipes/submit_comment', '');
 }

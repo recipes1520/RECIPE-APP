@@ -18,11 +18,12 @@ class CommentSection(webapp2.RequestHandler) :
 			input_author = str(users.get_current_user())
 			input_rating = int(cgi.escape(self.request.get('rating')))
 			input_comments = str(cgi.escape(self.request.get('comments')))
-			self.store_comment(input_recipe, input_author, input_rating,
+			comment_key = self.store_comment(input_recipe, input_author, input_rating,
 						   input_comments)
 			
-			key = self.response.headers['Content-Type'] = 'application/json' 
-			#json_comment_object = {'comment_key': key, author' : input_author, 'rating' : input_rating, 'commentText' : input_comments }
+			self.response.headers['Content-Type'] = 'application/json' 
+			self.update_user_info(comment_key)
+			json_comment_object = {'author': input_author, 'rating': input_rating, 'commentText': input_comments}
 
 			self.response.write(json.dumps(json_comment_object))
 		except(TypeError, ValueError):
@@ -36,8 +37,8 @@ class CommentSection(webapp2.RequestHandler) :
 		comment.rating = input_rating
 		comment.comment = input_comments
 		self.update_recipe_comment_section(input_recipe, comment)
-		key = comment.put()
-		return key
+		comment_key = comment.put()
+		return comment_key
 
 	def update_recipe_comment_section(self, recipe_name, comment) :	
 		query = DomainModel.Recipe.query(DomainModel.Recipe.title == recipe_name )	
@@ -46,6 +47,14 @@ class CommentSection(webapp2.RequestHandler) :
 		recipe.total_rating_points += comment.rating
 		recipe.avg_rating = float(recipe.total_rating_points)/len(recipe.comment_section)
 		recipe.put()
+
+	def update_user_info(self, comment_key) :	
+		user = users.get_current_user()
+		query = ndb.gql("SELECT * FROM Account WHERE user_id = :1", user.user_id())
+ 		account = query.get()
+ 		if account :
+ 			account.user_reviews.append(comment_key)	
+ 			account.put()
 
 class UploadRecipe(blobstore_handlers.BlobstoreUploadHandler):
 	def post(self):
