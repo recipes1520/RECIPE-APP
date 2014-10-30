@@ -40,6 +40,7 @@ function postComment( ) {
           return;
       }
       var commentSection = document.getElementById('commentSection');
+      document.getElementById('averageRating').innerText = "Average Rating: " + commentObject.avgRating;
       commentSection.innerHTML += " \
       <table> \
       <tr><td>"+commentObject.author+"</td></tr> \

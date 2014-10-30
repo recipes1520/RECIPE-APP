@@ -387,6 +387,11 @@ the recipe submission version of formContent*/
     box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.24);
 }
 
+#averageRating {
+    font-size: 16px;
+
+}
+
 /*END SUBMISSION SPECIFIC STUFF*/
 
 /* SHOPPING LIST SPECIFIC */

@@ -76,7 +76,7 @@
 	<!-- USER REVIEWS -->
 	<div class="userReviewPost">
 		<h3>Reviews and ratings </h3>
-		<h3> Average Rating: {{recipe.avg_rating|floatformat:1}} </h3>
+		<h5 id="averageRating">Average Rating: {{recipe.avg_rating}}</h5>
 		<div id="commentSection">
 		{% for review in reviews %}
 		<table id="commentSection" class="userReviewTable">

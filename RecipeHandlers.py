@@ -22,12 +22,12 @@ class CommentSection(webapp2.RequestHandler) :
 				input_author = str(user)
 				input_rating = int(cgi.escape(self.request.get('rating')))
 				input_comments = str(cgi.escape(self.request.get('comments')))
-				comment_key = self.store_comment(input_recipe, input_author, input_rating,
+				tup = self.store_comment(input_recipe, input_author, input_rating,
 							   input_comments)
 				
 				self.response.headers['Content-Type'] = 'application/json' 
-				self.update_user_info(comment_key)
-				json_comment_object = {'author': input_author, 'rating': input_rating, 'commentText': input_comments, "userStatus": "true"}
+				self.update_user_info(tup[0])
+				json_comment_object = {'author': input_author, 'rating': input_rating, 'commentText': input_comments, 'avgRating': round(tup[1],1), "userStatus": "true"}
 
 				self.response.write(json.dumps(json_comment_object))
 			except(TypeError, ValueError):
@@ -40,9 +40,9 @@ class CommentSection(webapp2.RequestHandler) :
 		comment.author = input_author
 		comment.rating = input_rating
 		comment.comment = input_comments
-		self.update_recipe_comment_section(input_recipe, comment)
+		avg_rating = self.update_recipe_comment_section(input_recipe, comment)
 		comment_key = comment.put()
-		return comment_key
+		return (comment_key, avg_rating)
 
 	def update_recipe_comment_section(self, recipe_name, comment) :	
 		query = DomainModel.Recipe.query(DomainModel.Recipe.title == recipe_name )	
@@ -51,6 +51,7 @@ class CommentSection(webapp2.RequestHandler) :
 		recipe.total_rating_points += comment.rating
 		recipe.avg_rating = float(recipe.total_rating_points)/len(recipe.comment_section)
 		recipe.put()
+		return recipe.avg_rating
 
 	def update_user_info(self, comment_key) :	
 		user = users.get_current_user()
