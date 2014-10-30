@@ -273,12 +273,19 @@ h3 {
 }
 
 #description {
-    padding-top: 10em;
+    padding-top: 3em;
 }
 
-#instructions {
-    padding-top: 10px !important;
+#instructionArea {
+    padding-top: 1em;
 }
+
+#timeEstimationArea {
+    padding-top: 3em;
+    text-align: left;
+}
+
+
 
 #comment {
     font-family: 'Bad Script', cursive;
@@ -317,6 +324,7 @@ the recipe submission version of formContent*/
 	padding: 5px;
 }
 
+
 #quantityColumn{
 	float: left;
 	width: 15%;
@@ -328,6 +336,11 @@ the recipe submission version of formContent*/
 	float: left;
 	padding: 5px;
 }
+.instrInput{
+    width: 100%;
+}
+
+
 
 #addIngredient {
     width: 15em;
@@ -350,6 +363,9 @@ the recipe submission version of formContent*/
     box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.24);
 }
 
+#instructionTable{
+    width:100%;
+}
 #addInstruction {
     width: 15em;
     text-align: center;

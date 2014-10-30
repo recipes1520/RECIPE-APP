@@ -13,7 +13,7 @@
 			<input type="text" placeholder="Recipe Name" name="recipe_title" required=TRUE>
 		</div>
 		<div class="addIngredContainer">
-			<h3>Ingredients and description</h3>
+			<h3>Ingredients</h3>
 			<table id="recipeTable">
 				<tr id="tableLabels">
 					<td>Ingredients</td>
@@ -30,22 +30,24 @@
 				<p>Add Ingredient</p>
 			</div>
 		</div>
-		
 		<div id="description">
-			<!-- <h3>Description</h3> -->
+			<h3>Description</h3>
 			<textarea rows="4" cols="50" placeholder="Description" name="description" required=TRUE></textarea>
 		</div>
+		<div id="instructionArea">
+		<h3>Instructions</h3>
 		<table id="instructionTable">
             <tr id="instructionInput" class="instRow">
-                <td><input type="text" class="instInput" placeholder="Instruction Step" name="instructions"></td>
+                <input type="text" class="instInput" placeholder="Instruction Step" name="instructions">
             </tr>
 		</table>
         <div id="addInstruction" onclick="addInstruction();">
 				<p>Add A New Step</p>
 		</div>
-        <br><br><br><br>
-		<table>
-			<tr><h3>Time estimation</h3></tr>
+		</div>
+        <div id="timeEstimationArea">
+		<h3>Time estimation</h3>
+		<table>	
 			<tr>
 				<td><input type="text" placeholder="Preparation time" name="prep_time" required=TRUE></td>
 			</tr>
@@ -53,6 +55,7 @@
 				<td><input type="text" placeholder="Cooking time" name="cook_time" required=TRUE></td>
 			</tr>
 		</table>
+		</div>
 		<div id="image_upload">
 			<h3>Photo upload</h3>
 			<input type="file" name="file"/>
@@ -69,7 +72,7 @@
         var table = document.getElementById('instructionTable');
 		var row = table.insertRow(-1);
 		var cell1 = row.insertCell(0);
-		cell1.innerHTML = '<input type="text" class="instInput" placeholder="Instruction Step" name="instructions">';
+		cell1.innerHTML = '<input type="text" class=\"instInput\" placeholder="Instruction Step" name="instructions">';
     }
 	function addIngredient(){
 		var table = document.getElementById('recipeTable');

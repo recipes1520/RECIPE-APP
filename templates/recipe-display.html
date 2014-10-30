@@ -34,28 +34,6 @@
 		<!-- INGREDIENT LIST -->
 		<div class="ingredientList">
 			<h3>List of ingredients</h3>
-			<!-- <table>
-				<tr>
-					<td>
-						<ul>
-							{% for ingredient in recipe.ingredients %}
-							<li> {{ingredient}} </li>
-							{% endfor %}
-						</ul>
-					</td>
-					<td>   
-						<table class="recipeAuthor">
-							<tr>
-								<td>Author: {{recipe.user_id}}</td>       
-							</tr>
-							<tr>
-								<td>Rating: </td>
-								<td>5</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-			</table> -->
                 <ul class="list-group">
                 {% for ingredient in recipe.ingredients %}
                   <li class="list-group-item" >
@@ -73,10 +51,10 @@
 			<h3>Time estimation</h3>
 			<table>
 				<tr>
-					<td>Preparation:</td><td>{{recipe.cook_time_est}}</td>
+					<td>Preparation:</td><td>{{recipe.prep_time_est}}</td>
 				</tr>
 				<tr>
-					<td>Cooking:</td><td>{{recipe.prep_time_est}}</td>
+					<td>Cooking:</td><td>{{recipe.cook_time_est}}</td>
 				</tr>
 			</table>
 		</div> <!-- END TIME ESTIMATION -->
@@ -124,13 +102,12 @@
 	<div class="recipeReview">
 		<h3> Submit Your Review </h3>
 		<form id ="commentForm" action="/recipes/submit_comment" method="post">
-			<!-- <input type="text" placeholder="Receipe Name" name="recipe" id="recipe" maxlength=255 required=TRUE/> <br> -->
 			<table id="user_info_review">
 				<tr>
 					<td>{{ current_user }}</td>
 				</tr>
 			</table>
-			<!--<input type="text" placeholder="Receipe Author" name="author" id="author" maxlength=255 required=TRUE/> <br> -->
+
 			<label class="radioLabel"> Rating: </label>
 			<label class="radioLabel">
 				5 <input type="radio" name="rating" value="5" required=TRUE>
