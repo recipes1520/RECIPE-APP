@@ -22,7 +22,7 @@ class CommentSection(webapp2.RequestHandler) :
 						   input_comments)
 			
 			key = self.response.headers['Content-Type'] = 'application/json' 
-			json_comment_object = {'comment_key': key, author' : input_author, 'rating' : input_rating, 'commentText' : input_comments }
+			#json_comment_object = {'comment_key': key, author' : input_author, 'rating' : input_rating, 'commentText' : input_comments }
 
 			self.response.write(json.dumps(json_comment_object))
 		except(TypeError, ValueError):
@@ -84,18 +84,20 @@ class UploadRecipe(blobstore_handlers.BlobstoreUploadHandler):
 
 	def create_search(self, names, key) :
 		for word in names :
-			try :
-				query = DomainModel.Search.query(DomainModel.Search.keyWord == word)
-				searchEntry = query.fetch()[0]
-				keyList = searchEntry.recipeKeys
+			query = DomainModel.Search.query(DomainModel.Search.keyWord == word)
+			searchEntry = query.fetch()
+			if len(searchEntry) > 0 :
+				keyList = searchEntry[0].recipeKeys
 				keyList.append(key)
-				searchEntry.recipeKeys = keyList
-			except IndexError :
+				searchEntry[0].recipeKeys = keyList
+				searchEntry[0].put()
+			else :
 				searchEntry = DomainModel.Search()
 				searchEntry.keyWord = word
 				keyList = []
 				keyList.append(key)
 				searchEntry.recipeKeys = keyList
+				searchEntry.put()
 
 	def getIngredients(self) :
 		ingredients = self.request.get_all('ingredients')
