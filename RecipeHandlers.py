@@ -147,6 +147,10 @@ class RecipeDisplay(webapp2.RequestHandler) :
 
 		recipe_name = recipe_name.replace("_"," ")
 		query = DomainModel.Recipe.query(DomainModel.Recipe.title == recipe_name)
+		
+		if query.count() == 0:
+			render_template(self, {}, 'templates/404-error-page.html')
+			return
 		recipe = query.fetch()[0]
 
 		#will load a default image if none provided.

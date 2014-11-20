@@ -14,6 +14,9 @@ from google.appengine.api import images
 
 # This class is a request handler for the Main Page.
 class MainPage(webapp2.RequestHandler) :
+	def post(self):
+		self.redirect('/')
+
 	def get(self) :
 		featuredRecipes = self.getFeatured()
 		template_values = {"featuredRecipes" : featuredRecipes}
@@ -25,6 +28,8 @@ class MainPage(webapp2.RequestHandler) :
 
 
 class SubmitPage(webapp2.RequestHandler) :
+	def post(self):
+		self.redirect('/recipe-submit')
 	def get(self) :
 		if not users.get_current_user():
 			render_template(self, {}, 'templates/login-required.html')
@@ -35,7 +40,8 @@ class SubmitPage(webapp2.RequestHandler) :
 		render_template(self, template_values, path)
 
 class UserAuth(webapp2.RequestHandler):
-
+	def post(self):
+		self.redirect('/authorize')
 	def get(self) :
 		user = users.get_current_user()
 		query = ndb.gql("SELECT * FROM Account WHERE user_id = :1", user.user_id())
@@ -142,6 +148,10 @@ class ShoplistHandler(webapp2.RequestHandler):
 	query = DomainModel.Shoplist.query(DomainModel.Shoplist.user_id == user.user_id())
 	ndb.delete_multi(query.fetch(keys_only=True))
 
+class DeadLinks(webapp2.RequestHandler):
+	def get(self, args):
+		render_template(self, {}, 'templates/404-error-page.html')
+
 def get_key() :
 	return ndb.Key('recipe_name', 'author')
 
@@ -177,5 +187,6 @@ app = webapp2.WSGIApplication([
   ('/search', SearchHandler),
   ('/shoplist', ShoplistHandler),
   ('/recipelist', RecipeLister),
-  ('/authorize', UserAuth)
+  ('/authorize', UserAuth),
+  ('/(.*)', DeadLinks)
 ], debug=True)
