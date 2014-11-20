@@ -54,7 +54,7 @@ class UserAuth(webapp2.RequestHandler):
 		self.redirect('/')
 
 class SearchHandler(webapp2.RequestHandler) :
-	def post(self) :
+	def get(self) :
 
 		search_query = self.request.get('searchInput')
 		search_results = []
@@ -90,6 +90,8 @@ class SearchHandler(webapp2.RequestHandler) :
 		}
 		path = 'templates/search-results.html'
 		render_template(self, template_values, path)
+	def post(self):
+		self.redirect('/search')
 class RecipeLister(webapp2.RequestHandler):
 	def get(self):
 		query = DomainModel.Recipe.query(DomainModel.Recipe.user_author == str(users.get_current_user()))
@@ -101,6 +103,8 @@ class RecipeLister(webapp2.RequestHandler):
 		object['titles'] = titles
 
 		self.response.write(json.dumps(object))
+	def post(self):
+		self.redirect('/recipelist')
 
 
 class ShoplistHandler(webapp2.RequestHandler):
@@ -151,6 +155,9 @@ class ShoplistHandler(webapp2.RequestHandler):
 class DeadLinks(webapp2.RequestHandler):
 	def get(self, args):
 		render_template(self, {}, 'templates/404-error-page.html')
+	def post(self, args):
+		self.redirect('/')
+
 
 def get_key() :
 	return ndb.Key('recipe_name', 'author')

@@ -165,6 +165,8 @@ class RecipeDisplay(webapp2.RequestHandler) :
 		}
 		path = "templates/recipe-display.html"
 		render_template(self, template_values, path)
+	def post(self, args):
+		self.redirect('/')
 
 def get_key() :
 	return ndb.Key('recipe_name', 'author')
