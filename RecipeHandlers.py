@@ -12,6 +12,9 @@ from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.api import images
 
 class CommentSection(webapp2.RequestHandler) :
+	def get(self):
+		render_template(self, {}, 'templates/permission-denied.html')
+
 	def post(self) :
 		user = users.get_current_user()
 		if user == None :
@@ -62,6 +65,9 @@ class CommentSection(webapp2.RequestHandler) :
 			account.put()
 
 class UploadRecipe(blobstore_handlers.BlobstoreUploadHandler):
+	def get(self):
+		render_template(self, {}, 'templates/permission-denied.html')
+		
 	def post(self):
 		#this is for image storing
 		img = self.get_uploads('file')

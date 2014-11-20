@@ -15,12 +15,20 @@ from google.appengine.api import images
 # This class is a request handler for the Main Page.
 class MainPage(webapp2.RequestHandler) :
 	def get(self) :
-		template_values = dict()
+		featuredRecipes = self.getFeatured()
+		template_values = {"featuredRecipes" : featuredRecipes}
 		path = 'templates/index.html'
 		render_template(self, template_values, path)
+	def getFeatured(self) :
+		return DomainModel.Recipe.query().fetch(5)
+
+
 
 class SubmitPage(webapp2.RequestHandler) :
 	def get(self) :
+		if not users.get_current_user():
+			render_template(self, {}, 'templates/login-required.html')
+			return
 		upload_url = blobstore.create_upload_url('/recipes/upload')
 		template_values = {'uploadURL': upload_url}
 		path = 'templates/recipe-submission.html'
