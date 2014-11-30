@@ -37,5 +37,6 @@ class Account(ndb.Model) :
 	user_reviews = ndb.KeyProperty(repeated=True, kind=ReviewSubmission)
 
 class Shoplist(ndb.Model) :
-  item = ndb.StringProperty(indexed=False)
+  item = ndb.StringProperty(indexed=True)
   user_id = ndb.StringProperty(indexed=True)
+  bought = ndb.BooleanProperty(default=False)

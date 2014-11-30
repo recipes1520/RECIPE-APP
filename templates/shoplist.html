@@ -9,7 +9,7 @@
      <h3>Shopping list</h3>
      <p id="shoppingListItems">
      {% for row in shopping_list %}
-     {{ row.item }}<br>
+     <a href="#" onclick="buyShoppingListItem('{{ row.item }}')">{{ row.item }}</a><br>
      {% endfor %}
      </p>
      <input type="text" name="list_item" id="shoppingListItem" placeholder="ex. 4 x Eggs" maxlength="100">

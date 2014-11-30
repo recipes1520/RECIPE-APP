@@ -115,13 +115,35 @@ function addShoppingListItem()
            var json = JSON.parse(response);
            
            var shoppingListItems = document.getElementById('shoppingListItems');
-           shoppingListItems.innerHTML += json.item + '<br>';
+           shoppingListItems.innerHTML += '<a href="#" id="item_'+json.item_id+'" onclick="buyShoppingListItem('+json.item_id+')">' + json.item + '</a><br>';
          }
        }
        xmlhttp.open("post", "/shoplist", true);
        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
        xmlhttp.send("action=add&shopitem=" + encodeURIComponent(item));
      }
+    }
+    
+    function buyShoppingListItem(item_id) {
+      var xmlhttp = new XMLHttpRequest(); 
+     if (xmlhttp) {
+       xmlhttp.onreadystatechange=function()
+       {
+         if (xmlhttp.readyState==4 && xmlhttp.status==200)
+         {
+           var response = xmlhttp.responseText;
+           var json = JSON.parse(response);
+           
+           var shoppingListItem = document.getElementById('item_' + json.item_id);
+           shoppingListItem.style.textDecoration = 'line-through';
+         }
+       }
+       xmlhttp.open("post", "/shoplist", true);
+       xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+       xmlhttp.send("action=buy&item_id=" + encodeURIComponent(item_id));
+     }
+      
+      return false;
     }
    
     function loadShoppingList(){
@@ -136,7 +158,11 @@ function addShoppingListItem()
            var shoppingListHTML = "";
            var item_list = shoppingListObject.shoppingList;
            for( i in item_list ){
-             shoppingListHTML += (item_list[i] + '<br>');
+             if (item_list[i].bought == false) {
+               shoppingListHTML += ('<a href="#" id="item_'+i+'" onclick="buyShoppingListItem('+i+')">' + item_list[i].name + '</a><br>');
+             } else {
+               shoppingListHTML += ('<span style="text-decoration: line-through">' + item_list[i].name + '</span><br>');
+             }
            }
            shoppingListSection.innerHTML = shoppingListHTML;
          }

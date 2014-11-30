@@ -108,49 +108,64 @@ class RecipeLister(webapp2.RequestHandler):
 
 
 class ShoplistHandler(webapp2.RequestHandler):
-  def get(self):
-	list_objects = self.getShoppingList()
-	json_return_object = {}
-	items = []
-	for item in list_objects :
-		items.append(item.item)
-	json_return_object['shoppingList'] = items
+	def get(self):
+		list_objects = self.getShoppingList()
+		json_return_object = {}
+		items = {}
+		for item in list_objects :
+			items[item.key.id()] = {
+				'name': item.item,
+				'bought': item.bought
+			}
+		json_return_object['shoppingList'] = items
 
-	self.response.write(json.dumps(json_return_object))
+		self.response.write(json.dumps(json_return_object))
 
-  def post(self):
-	action = cgi.escape(self.request.get('action'))
-	shoplist_item = cgi.escape(self.request.get('shopitem'))
+	def post(self):
+		action = cgi.escape(self.request.get('action'))
+		shoplist_item = cgi.escape(self.request.get('shopitem'))
 
-	if action == 'add':
-	  self.storeShoppingList(shoplist_item)
-	  shopping_list_item_json = {'item' : shoplist_item, 'action': action }
-	elif action == 'clear':
-	  self.deleteShoppingList()
-	  shopping_list_item_json = {'action': action }
+		if action == 'add':
+			item_id = self.storeShoppingList(shoplist_item)
+			shopping_list_item_json = {'item' : shoplist_item, 'action': action, 'item_id': item_id }
+		elif action == 'buy':
+			item_id = cgi.escape(self.request.get('item_id'))
+			self.buyShoppingListItem(item_id)
+			shopping_list_item_json = {'action': action, 'item_id': item_id }
+		elif action == 'clear':
+			self.deleteShoppingList()
+			shopping_list_item_json = {'action': action }
 
-	self.response.headers['Content-Type'] = 'application/json'
-	self.response.write(json.dumps(shopping_list_item_json))
+		self.response.headers['Content-Type'] = 'application/json'
+		self.response.write(json.dumps(shopping_list_item_json))
 
-  def storeShoppingList(self, shopping_item):
-	user = users.get_current_user()
+	def storeShoppingList(self, shopping_item):
+		user = users.get_current_user()
 
-	shoplist = DomainModel.Shoplist()
-	shoplist.item = shopping_item
-	shoplist.user_id = user.user_id()
-	shoplist.put()
-  
-  def getShoppingList(self):
-	user = users.get_current_user()
+		shoplist = DomainModel.Shoplist()
+		shoplist.item = shopping_item
+		shoplist.user_id = user.user_id()
+		shoplist.put()
 
-	query = DomainModel.Shoplist.query(DomainModel.Shoplist.user_id == user.user_id())
+		return shoplist.key.id()
 
-	return query.fetch()
-  
-  def deleteShoppingList(self):
-	user = users.get_current_user()
-	query = DomainModel.Shoplist.query(DomainModel.Shoplist.user_id == user.user_id())
-	ndb.delete_multi(query.fetch(keys_only=True))
+	def buyShoppingListItem(self, shopping_item_id):
+		shoplist = DomainModel.Shoplist.get_by_id(int(shopping_item_id))
+		if (shoplist is not None):
+			shoplist.bought = True
+			shoplist.put()
+
+	def getShoppingList(self):
+		user = users.get_current_user()
+
+		query = DomainModel.Shoplist.query(DomainModel.Shoplist.user_id == user.user_id())
+
+		return query.fetch()
+
+	def deleteShoppingList(self):
+		user = users.get_current_user()
+		query = DomainModel.Shoplist.query(DomainModel.Shoplist.user_id == user.user_id())
+		ndb.delete_multi(query.fetch(keys_only=True))
 
 class DeadLinks(webapp2.RequestHandler):
 	def get(self, args):
