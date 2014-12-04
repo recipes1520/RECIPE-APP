@@ -56,13 +56,17 @@ function postComment( ) {
   
 
 
-  var rating;
+  var rating = -1;
   var radioButtons = document.getElementById('commentForm').rating
   for (i = 0; i < radioButtons.length; i++) {
     if ( radioButtons[i].checked ) {
         rating = radioButtons[i].value;
         break;
     }
+  }
+  if( rating == -1 || document.getElementById('comments').value == ''){
+    alert( "Rating must be selected and a comment must be written.");
+    return;
   }
 
   parameters = 'recipeTitle='+ document.getElementById('recipeTitle').value + 

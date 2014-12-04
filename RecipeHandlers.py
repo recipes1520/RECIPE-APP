@@ -102,8 +102,10 @@ class UploadRecipe(blobstore_handlers.BlobstoreUploadHandler):
 		for item in ingredient_list :
 			split_ingredients = split_ingredients + item.split(" ")
 		self.create_search(split_ingredients, key)
+		while( DomainModel.Recipe.query(DomainModel.Recipe.title == recipeTitle).count() == 0) :
+			pass
+		self.redirect('/recipes/' + recipeTitle.replace(' ', '_'))
 
-		self.redirect('/recipe-submit')
 
 	def create_search(self, names, key) :
 		for item in names :
@@ -130,6 +132,8 @@ class UploadRecipe(blobstore_handlers.BlobstoreUploadHandler):
 
 		list = []
 		for ing in zip(ingredients, quantities, units) :
+			if len(ing[0]) == 0 :
+				continue
 			list.append( ing[1] + " " + ing[2] + "_" + ing[0] )
 
 		return list
@@ -139,6 +143,8 @@ class UploadRecipe(blobstore_handlers.BlobstoreUploadHandler):
 
 		list = []
 		for instruction in instructions :
+			if len( instruction) == 0 : 
+				continue
 			list.append(instruction)
 		return list
 

@@ -36,13 +36,15 @@
 			<h3>List of ingredients</h3>
                 <ul class="list-group">
                 {% for ingredient in recipe.ingredients %}
+                  {% if ingredient != '' %}
                   <li class="list-group-item" >
                     <span id="quantity" class="badge">
                    	 <script>getUnits("{{ingredient}}")</script>
                     </span>
                  	<script>getIng("{{ingredient}}")</script>
                   </li>
-                  {% endfor %}
+                 {% endif %}
+                {% endfor %}
                 </ul>
 
 		</div> <!-- END INGREDIENT LIST -->
@@ -67,7 +69,9 @@
 			<h3> Instructions </h3>
 			<ul>
 				{% for instruction in recipe.instructions %}
+				{% if instruction != '' %}
 				<li> {{instruction}} </li>
+				{% endif %}
 				{% endfor %}
 			</ul>
 		</div>
@@ -110,24 +114,24 @@
 
 			<label class="radioLabel"> Rating: </label>
 			<label class="radioLabel">
-				5 <input type="radio" name="rating" value="5" required=TRUE>
+				5 <input required type="radio" name="rating" value="5" required=TRUE>
 			</label> 
 			<label class="radioLabel">
-				4 <input type="radio" name="rating" value="4" required=TRUE> 
+				4 <input required type="radio" name="rating" value="4" required=TRUE> 
 			</label>
 			<label class="radioLabel">
-				3 <input type="radio" name="rating" value="3" required=TRUE> 
+				3 <input required type="radio" name="rating" value="3" required=TRUE> 
 			</label>
 			<label class="radioLabel">
-				2 <input type="radio" name="rating" value="2" required=TRUE> 
+				2 <input required type="radio" name="rating" value="2" required=TRUE> 
 			</label>
 			<label class="radioLabel">
-				1 <input type="radio" name="rating" value="1" required=TRUE> 
+				1 <input required type="radio" name="rating" value="1" required=TRUE> 
 			</label>
 			<label class="radioLabel">
-				0 <input type="radio" name="rating" value="0" required=TRUE> 
+				0 <input required type="radio" name="rating" value="0" required=TRUE> 
 			</label> <br>
-			<textarea rows="4" cols="50" placeholder="Comments" name="comments" id="comments" maxlength=255 required=TRUE></textarea>
+			<textarea required rows="4" cols="50" placeholder="Comments" name="comments" id="comments" maxlength=255 required=TRUE></textarea>
 			<input type="hidden" id="recipeTitle" name="recipeTitle" value="{{recipe.title}}">
 			<div onclick="postComment();" class="button">
 				<input class="button" value="Submit">
