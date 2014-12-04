@@ -38,18 +38,19 @@ function postComment( ) {
       if( commentObject.userStatus == "false"){
           alert("Must be logged in to comment");
           return;
-      }
-      var commentSection = document.getElementById('commentSection');
-      document.getElementById('averageRating').innerText = "Average Rating: " + commentObject.avgRating;
-      commentSection.innerHTML += " \
-      <table> \
-      <tr><td>"+commentObject.author+"</td></tr> \
-      <tr><td>"+ new Date().toUTCString()+"</td></tr> \
-      <tr><td id=\"rate\">"+commentObject.rating+" out of 5</td></tr> \
-      <tr><td><p id=\"comment\">" +commentObject.commentText+"</p></td></tr> \
-      </table>";
+      } else{
+        var commentSection = document.getElementById('commentSection');
+        document.getElementById('averageRating').innerText = "Average Rating: " + commentObject.avgRating;
+        commentSection.innerHTML += " \
+        <table> \
+        <tr><td>"+commentObject.author+"</td></tr> \
+        <tr><td>"+ new Date().toUTCString()+"</td></tr> \
+        <tr><td id=\"rate\">"+commentObject.rating+" out of 5</td></tr> \
+        <tr><td><p id=\"comment\">" +commentObject.commentText+"</p></td></tr> \
+        </table>";
 
-      document.getElementById('comments').value = "";
+        document.getElementById('comments').value = "";
+        }
       }
       
     }
@@ -71,7 +72,7 @@ function postComment( ) {
 
   parameters = 'recipeTitle='+ document.getElementById('recipeTitle').value + 
                '&rating='+ rating +
-               '&comments='+ document.getElementById('comments').value
+               '&comments='+ document.getElementById('comments').value;
                
   postParameters(xmlHttp, '/recipes/submit_comment', parameters);
 }
@@ -94,7 +95,7 @@ function getProfile( ) {
     }
   }
   
-  parameters = ''
+  parameters = '';
   postParameters(xmlHttp, '/profile', parameters);
 }
 
@@ -102,7 +103,10 @@ function getProfile( ) {
 function addShoppingListItem()
    {
      var item = document.getElementById('shoppingListItem');
-     sendItemUsingAJAX(item.value);
+     var inputText = item.value.replace(/^\s+/, '').replace(/\s+$/, '');
+     if( inputText != ''){
+        sendItemUsingAJAX(item.value);
+     }   
      // clear input field
      item.value = '';
    }
@@ -119,7 +123,7 @@ function addShoppingListItem()
            var json = JSON.parse(response);
            
            var shoppingListItems = document.getElementById('shoppingListItems');
-           shoppingListItems.innerHTML += '<a href="#" id="item_'+json.item_id+'" onclick="buyShoppingListItem('+json.item_id+')">' + json.item + '</a><br>';
+           shoppingListItems.innerHTML += '<a href="" id="item_'+json.item_id+'" onclick="buyShoppingListItem('+json.item_id+')">' + json.item + '</a><br>';
          }
        }
        xmlhttp.open("post", "/shoplist", true);

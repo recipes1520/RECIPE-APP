@@ -18,14 +18,16 @@ class MainPage(webapp2.RequestHandler) :
 		self.redirect('/')
 
 	def get(self) :
-		featuredRecipes = self.getFeatured()
-		template_values = {"featuredRecipes" : featuredRecipes}
 		path = 'templates/index.html'
-		render_template(self, template_values, path)
-	def getFeatured(self) :
-		return DomainModel.Recipe.query().fetch(5)
+		render_template(self, {}, path)
 
+class AboutPage(webapp2.RequestHandler) :
+	def post(self):
+		self.redirect('/')
 
+	def get(self) :
+		path = 'templates/about.html'
+		render_template(self, {}, path)
 
 class SubmitPage(webapp2.RequestHandler) :
 	def post(self):
@@ -56,9 +58,12 @@ class UserAuth(webapp2.RequestHandler):
 class SearchHandler(webapp2.RequestHandler) :
 	def get(self) :
 
-		search_query = self.request.get('searchInput')
+		search_query = cgi.escape(self.request.get('searchInput'))
+		if search_query == None or search_query == '' or search_query.isspace() :
+			return
 		search_results = []
 		search_words = search_query.split(" ")
+
 		for word in search_words :
 			query = DomainModel.Search.query(DomainModel.Search.keyWord == word.lower())
 			search_results = search_results + query.fetch()
@@ -180,7 +185,7 @@ def get_key() :
 
 def getNavBar():
 	navBarTitles = ['Submit Recipe', 'Featured', 'About']
-	navBarLinks = ['/recipe-submit', '/recipes/Godly_Pumpkin_Mash', '#']
+	navBarLinks = ['/recipe-submit', '/recipes/Godly_Pumpkin_Mash', '/about']
 	return zip(navBarLinks, navBarTitles)
 
 def render_template(self, template_values, path):
@@ -205,6 +210,7 @@ def render_template(self, template_values, path):
 
 app = webapp2.WSGIApplication([
   ('/', MainPage),
+  ('/about', AboutPage),
   ('/recipe-submit', SubmitPage),
   ('/search', SearchHandler),
   ('/shoplist', ShoplistHandler),

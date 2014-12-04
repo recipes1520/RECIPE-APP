@@ -24,7 +24,11 @@ class CommentSection(webapp2.RequestHandler) :
 				input_recipe = str(cgi.escape(self.request.get('recipeTitle')))
 				input_author = str(user)
 				input_rating = int(cgi.escape(self.request.get('rating')))
+				if input_rating > 5 or input_rating < 0 :
+					return
 				input_comments = str(cgi.escape(self.request.get('comments')))
+				if len( input_comments ) == 0 :
+					return
 				tup = self.store_comment(input_recipe, input_author, input_rating,
 							   input_comments)
 				
@@ -132,7 +136,7 @@ class UploadRecipe(blobstore_handlers.BlobstoreUploadHandler):
 
 		list = []
 		for ing in zip(ingredients, quantities, units) :
-			if len(ing[0]) == 0 :
+			if ing[0] == '' or ing[0].isspace() :
 				continue
 			list.append( ing[1] + " " + ing[2] + "_" + ing[0] )
 
@@ -143,14 +147,16 @@ class UploadRecipe(blobstore_handlers.BlobstoreUploadHandler):
 
 		list = []
 		for instruction in instructions :
-			if len( instruction) == 0 : 
+			if instruction == '' or instruction.isspace() : 
 				continue
 			list.append(instruction)
 		return list
 
 class RecipeDisplay(webapp2.RequestHandler) :
 	def get(self, recipe_name) :
-
+		is_user = 0
+		if users.get_current_user() :
+			is_user = 1
 		recipe_name = recipe_name.replace("_"," ")
 		query = DomainModel.Recipe.query(DomainModel.Recipe.title == recipe_name)
 		
@@ -167,7 +173,9 @@ class RecipeDisplay(webapp2.RequestHandler) :
 		template_values = {
 		  'recipe' : recipe,
 		  'imgURL' : imgURL,
-		  'reviews' : recipe.comment_section
+		  'reviews' : recipe.comment_section,
+		  'is_user' : is_user,
+		  'login_url' : users.create_login_url('/recipes/' + recipe_name.replace(' ', '_'))
 		}
 		path = "templates/recipe-display.html"
 		render_template(self, template_values, path)

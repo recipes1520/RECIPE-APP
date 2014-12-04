@@ -103,6 +103,7 @@
 		</div>	        
 	</div> <!-- END USER REVIEWS -->
 	<!-- RECIPE REVIEW FORM -->
+	{% if is_user == 1 %}
 	<div class="recipeReview">
 		<h3> Submit Your Review </h3>
 		<form id ="commentForm" action="/recipes/submit_comment" method="post">
@@ -138,6 +139,9 @@
 			</div>
 		</form>
 	</div>  <!-- END RECIPE REVIEW FORM  CONTAINER-->
+	{% else %}
+		<h3><a href="{{login_url}}">You must be logged in to comment!</a></h3>
+	{% endif %}
 </div> <!-- END RECEIPE AND REVIEW FORM CONTENT -->
-
 	{% endblock %}
+</html>
